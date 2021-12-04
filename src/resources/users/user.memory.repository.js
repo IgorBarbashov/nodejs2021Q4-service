@@ -1,6 +1,6 @@
 const { REPOSITORY_ERROR_MESSAGES } = require('../../constants');
 
-class UserRepository {
+class UsersRepository {
   constructor() {
     this.users = new Map();
   }
@@ -71,8 +71,8 @@ class UserRepository {
   }
 }
 
-const userRepository = new UserRepository();
+const usersRepository = new UsersRepository();
 
 module.exports = {
-  userRepository
+  usersRepository
 };

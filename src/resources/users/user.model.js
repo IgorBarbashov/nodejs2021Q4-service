@@ -19,8 +19,8 @@ class User {
   }
 
   static toRepository(user) {
-    const { id, ...rest } = user;
-    return rest;
+    const { name, login, password } = user;
+    return { name, login, password };
   }
 }
 
