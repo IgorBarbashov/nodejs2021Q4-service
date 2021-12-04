@@ -7,4 +7,6 @@ const app = new Koa();
 app.use(bodyParser());
 app.use(router());
 
-module.exports = app;
+module.exports = {
+    app
+};
