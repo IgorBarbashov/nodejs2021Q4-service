@@ -12,7 +12,7 @@
     "start": "nodemon src/server.js",
     "lint": "eslint --ext .js,.ts src/",
     "lint:fix": "eslint --ext .js,.ts --fix src/",
-    "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
+    "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand --watch",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
   },
   "keywords": [
@@ -20,7 +20,7 @@
     "school",
     "rest",
     "node",
-    "express",
+    "koa",
     "autotest",
     "starter"
   ],
@@ -45,10 +45,10 @@
     ]
   },
   "dependencies": {
+    "@koa/router": "^10.1.1",
     "cross-env": "7.0.3",
     "dotenv": "10.0.0",
-    "express": "4.17.1",
-    "swagger-ui-express": "4.1.6",
+    "koa": "^2.13.4",
     "uuid": "8.3.2",
     "yamljs": "0.3.0"
   },
