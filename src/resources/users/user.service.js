@@ -28,6 +28,7 @@ class UsersService {
 
     static async delete(id) {
         await usersRepository.delete(id);
+        // TODO - unassign corresponding tasks
     }
 };
 

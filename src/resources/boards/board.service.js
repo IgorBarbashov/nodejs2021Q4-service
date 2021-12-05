@@ -37,18 +37,21 @@ class BoardsService {
         return { ...addedBoard, columns };
     };
 
-    // static async update(id, user) {
-                                // const bodyToRepository = Board.toRepository(body);
-                                // const user = new Board(bodyToRepository);
-                                // const updatedUser = await boardsRepository.update(id, user);
-                                // return updatedUser;
-    //     const updatedBoard = await boardsRepository.update(id, user);
-    //     return updatedBoard;
-    // }
+    static async update(id, body) {
+        const bodyToRepository = Board.toRepository(body);
+        const columnsPromises = bodyToRepository.columns
+            ? bodyToRepository.columns.map(ColumnsService.create)
+            : [];
+        const columns = await Promise.all(columnsPromises);
+        const mappedColumns = columns.map(el => el.id);
+        await boardsRepository.update(id, { ...bodyToRepository, id, columns: mappedColumns });
+        return { ...bodyToRepository, id, columns };
+    }
 
-    // static async delete(id) {
-    //     await boardsRepository.delete(id);
-    // }
+    static async delete(id) {
+        await boardsRepository.delete(id);
+        // TODO - delete all boards Tasks
+    }
 };
 
 module.exports = {

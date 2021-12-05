@@ -19,12 +19,16 @@ boardsRouter.get('/', async (ctx) => {
 });
 
 boardsRouter.get('/:id', async (ctx) => {
-    const { id } = ctx.params;
-    const board = await BoardsService.getById(id);
-    const boardToResponse = Board.toResponse(board);
-    ctx.body = {
-        ...boardToResponse,
-        columns: boardToResponse.columns ? boardToResponse.columns.map(Column.toResponse) : []
+    try {
+        const { id } = ctx.params;
+        const board = await BoardsService.getById(id);
+        const boardToResponse = Board.toResponse(board);
+        ctx.body = {
+            ...boardToResponse,
+            columns: boardToResponse.columns ? boardToResponse.columns.map(Column.toResponse) : []
+        }
+    } catch {
+        ctx.status = StatusCodes.NOT_FOUND;
     }
 });
 
@@ -39,18 +43,26 @@ boardsRouter.post('/', async (ctx) => {
     }
 });
 
-// boardsRouter.put('/:id', async (ctx) => {
-//     const { id } = ctx.params;
-//     const { body } = ctx.request;
-//     const user = await BoardsService.update(id, body);
-//     ctx.body = Board.toResponse(user);
-// });
+boardsRouter.put('/:id', async (ctx) => {
+    const { id } = ctx.params;
+    const { body } = ctx.request;
+    const board = await BoardsService.update(id, body);
+    const boardToResponse = Board.toResponse(board);
+    ctx.body = {
+        ...boardToResponse,
+        columns: boardToResponse.columns ? boardToResponse.columns.map(Column.toResponse) : []
+    }
+});
 
-// boardsRouter.delete('/:id', async (ctx) => {
-//     const { id } = ctx.params;
-//     await BoardsService.delete(id);
-//     ctx.status = StatusCodes.NO_CONTENT;
-// });
+boardsRouter.delete('/:id', async (ctx) => {
+    try {
+        const { id } = ctx.params;
+        await BoardsService.delete(id);
+        ctx.status = StatusCodes.NO_CONTENT;
+    } catch {
+        ctx.status = StatusCodes.NOT_FOUND;
+    }
+});
 
 module.exports = {
     boardsRouter

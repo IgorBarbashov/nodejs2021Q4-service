@@ -38,33 +38,33 @@ class BoardsRepository {
     });
   }
   
-  // update(key, value) {
-  //   return new Promise((resolve, reject) => { // aka async request to db
-  //     setTimeout(() => {
-  //       if (this._isItemExists(key)) {
-  //         this.boards.set(key, value);
-  //         resolve(value);
-  //       } else {
-          // reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
-  //       }
-  //       resolve();
-  //     }, 300);
-  //   });
-  // }
+  update(key, value) {
+    return new Promise((resolve, reject) => { // aka async request to db
+      setTimeout(() => {
+        if (this._isItemExists(key)) {
+          this.boards.set(key, value);
+          resolve(value);
+        } else {
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
+        }
+        resolve();
+      }, 300);
+    });
+  }
 
-  // delete(key) {
-  //   return new Promise((resolve, reject) => { // aka async request to db
-  //     setTimeout(() => {
-  //       if (this._isItemExists(key)) {
-  //         this.boards.delete(key);
-  //         resolve();
-  //       } else {
-          // reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
-  //       }
-  //       resolve();
-  //     }, 300);
-  //   });
-  // }
+  delete(key) {
+    return new Promise((resolve, reject) => { // aka async request to db
+      setTimeout(() => {
+        if (this._isItemExists(key)) {
+          this.boards.delete(key);
+          resolve();
+        } else {
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
+        }
+        resolve();
+      }, 300);
+    });
+  }
 
   _isItemExists(key) {
     return this.boards.has(key);
