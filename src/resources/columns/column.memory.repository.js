@@ -9,7 +9,7 @@ class ColumnsRepository {
     return new Promise((resolve) => { // aka async request to db
       setTimeout(() => {
         resolve(this.columns);
-      }, 300);
+      }, 100);
     });
   }
 
@@ -21,7 +21,7 @@ class ColumnsRepository {
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
         }
-      }, 300);
+      }, 100);
     });
   }
 
@@ -34,7 +34,7 @@ class ColumnsRepository {
           this.columns.set(key, value);
           resolve(value);
         }
-      }, 300);
+      }, 100);
     });
   }
   
@@ -48,7 +48,7 @@ class ColumnsRepository {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
         }
         resolve();
-      }, 300);
+      }, 100);
     });
   }
 

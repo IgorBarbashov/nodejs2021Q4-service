@@ -1,5 +1,6 @@
 const { User } = require('./user.model');
 const { usersRepository } = require('./user.memory.repository');
+const { TasksService } = require('../tasks/tasks.service');
 
 class UsersService {
     static async getAll() {
@@ -28,7 +29,7 @@ class UsersService {
 
     static async delete(id) {
         await usersRepository.delete(id);
-        // TODO - unassign corresponding tasks
+        await TasksService.unassignUser(id);
     }
 };
 

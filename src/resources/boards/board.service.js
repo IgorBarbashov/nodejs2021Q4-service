@@ -1,6 +1,7 @@
 const { Board } = require('./board.model');
 const { boardsRepository } = require('./board.memory.repository');
 const { ColumnsService } = require('../columns/column.service');
+const { TasksService } = require('../tasks/tasks.service');
 
 class BoardsService {
     static async _columnsIdToObject(columnsIds) {
@@ -50,7 +51,14 @@ class BoardsService {
 
     static async delete(id) {
         await boardsRepository.delete(id);
-        // TODO - delete all boards Tasks
+        const tasks = await TasksService.getAll();
+        const tasksPromises = [];
+        tasks.forEach(task => {
+            if (task.boardId === id) {
+                tasksPromises.push(TasksService.delete(task.id));
+            }
+        });
+        await Promise.all(tasksPromises);
     }
 };
 

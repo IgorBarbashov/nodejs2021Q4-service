@@ -9,7 +9,7 @@ class UsersRepository {
     return new Promise((resolve) => { // aka async request to db
       setTimeout(() => {
         resolve(this.users);
-      }, 300);
+      }, 100);
     });
   }
 
@@ -21,7 +21,7 @@ class UsersRepository {
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
         }
-      }, 300);
+      }, 100);
     });
   }
 
@@ -34,7 +34,7 @@ class UsersRepository {
           this.users.set(key, value);
           resolve(value);
         }
-      }, 300);
+      }, 100);
     });
   }
   
@@ -48,7 +48,7 @@ class UsersRepository {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
         }
         resolve();
-      }, 300);
+      }, 100);
     });
   }
 
@@ -62,7 +62,7 @@ class UsersRepository {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
         }
         resolve();
-      }, 300);
+      }, 100);
     });
   }
 

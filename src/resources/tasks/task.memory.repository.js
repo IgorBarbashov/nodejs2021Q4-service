@@ -9,7 +9,7 @@ class TasksRepository {
     return new Promise((resolve) => { // aka async request to db
       setTimeout(() => {
         resolve(this.tasks);
-      }, 300);
+      }, 100);
     });
   }
 
@@ -21,7 +21,7 @@ class TasksRepository {
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
-      }, 300);
+      }, 100);
     });
   }
 
@@ -34,7 +34,7 @@ class TasksRepository {
           this.tasks.set(key, value);
           resolve(value);
         }
-      }, 300);
+      }, 100);
     });
   }
   
@@ -48,7 +48,7 @@ class TasksRepository {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
         resolve();
-      }, 300);
+      }, 100);
     });
   }
 
@@ -62,7 +62,20 @@ class TasksRepository {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
         resolve();
-      }, 300);
+      }, 100);
+    });
+  }
+
+  unassignUser(userId) {
+    return new Promise((resolve) => { // aka async request to db
+      setTimeout(() => {
+        this.tasks.forEach((value, key, map) => {
+          if (value.userId === userId) {
+            map.set(key, { ...value, userId: null });
+          }
+        });
+        resolve();
+      }, 100);
     });
   }
 

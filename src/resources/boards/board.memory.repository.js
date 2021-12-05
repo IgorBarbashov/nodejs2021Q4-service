@@ -9,7 +9,7 @@ class BoardsRepository {
     return new Promise((resolve) => { // aka async request to db
       setTimeout(() => {
         resolve(this.boards);
-      }, 300);
+      }, 100);
     });
   }
 
@@ -21,7 +21,7 @@ class BoardsRepository {
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
-      }, 300);
+      }, 100);
     });
   }
 
@@ -34,7 +34,7 @@ class BoardsRepository {
           this.boards.set(key, value);
           resolve(value);
         }
-      }, 300);
+      }, 100);
     });
   }
   
@@ -48,7 +48,7 @@ class BoardsRepository {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
         resolve();
-      }, 300);
+      }, 100);
     });
   }
 
@@ -62,7 +62,7 @@ class BoardsRepository {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
         resolve();
-      }, 300);
+      }, 100);
     });
   }
 

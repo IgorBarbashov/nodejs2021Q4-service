@@ -29,6 +29,10 @@ class TasksService {
     static async delete(id) {
         await tasksRepository.delete(id);
     }
+
+    static async unassignUser(userId) {
+        await tasksRepository.unassignUser(userId);
+    }
 };
 
 module.exports = {
