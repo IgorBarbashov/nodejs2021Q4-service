@@ -10,6 +10,10 @@ const REPOSITORY_ERROR_MESSAGES = {
     BOARDS: {
         NOT_FOUND: 'Board not found, id: ',
         EXISTS: 'Board already exists, id: '
+    },
+    TASKS: {
+        NOT_FOUND: 'Task not found, id: ',
+        EXISTS: 'Task already exists, id: '
     }
 };
 
