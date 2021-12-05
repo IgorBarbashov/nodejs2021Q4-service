@@ -5,6 +5,26 @@ class ColumnsRepository {
     this.columns = new Map();
   }
 
+  getAll() {
+    return new Promise((resolve) => { // aka async request to db
+      setTimeout(() => {
+        resolve(this.columns);
+      }, 300);
+    });
+  }
+
+  getById(key) {
+    return new Promise((resolve, reject) => { // aka async request to db
+      setTimeout(() => {
+        if (this._isItemExists(key)) {
+          resolve(this.columns.get(key));
+        } else {
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
+        }
+      }, 300);
+    });
+  }
+
   add(key, value) {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {

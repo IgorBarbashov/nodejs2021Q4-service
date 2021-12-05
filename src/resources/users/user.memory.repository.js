@@ -8,7 +8,7 @@ class UsersRepository {
   getAll() {
     return new Promise((resolve) => { // aka async request to db
       setTimeout(() => {
-        resolve([ ...this.users.values() ]);
+        resolve(this.users);
       }, 300);
     });
   }

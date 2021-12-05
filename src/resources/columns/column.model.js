@@ -11,6 +11,11 @@ class Column {
     this.order = order;
   }
 
+  static toResponse(column) {
+    const { title, order } = column;
+    return { title, order };
+  }
+
   static toRepository(column) {
     const { title, order } = column;
     return { title, order };

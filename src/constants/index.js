@@ -6,6 +6,10 @@ const REPOSITORY_ERROR_MESSAGES = {
     COLUMNS: {
         NOT_FOUND: 'Column not found, id: ',
         EXISTS: 'Column already exists, id: '
+    },
+    BOARDS: {
+        NOT_FOUND: 'Board not found, id: ',
+        EXISTS: 'Board already exists, id: '
     }
 };
 
