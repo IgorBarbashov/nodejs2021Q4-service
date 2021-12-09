@@ -1,23 +1,26 @@
 import { REPOSITORY_ERROR_MESSAGES } from '../../constants';
+import { IColumn, IColumnBD } from './column.interfaces';
 
 class ColumnsRepository {
+  columns: IColumnBD;
+
   constructor() {
     this.columns = new Map();
   }
 
-  getAll() {
-    return new Promise((resolve) => { // aka async request to db
+  getAll(): Promise<IColumnBD> {
+    return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.columns);
       }, 100);
     });
   }
 
-  getById(key) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  getById(key: string): Promise<IColumn> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          resolve(this.columns.get(key));
+          resolve(this.columns.get(key) as IColumn);
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
         }
@@ -25,8 +28,8 @@ class ColumnsRepository {
     });
   }
 
-  add(key, value) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  add(key: string, value: IColumn): Promise<IColumn> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.EXISTS}${key}`));
@@ -38,21 +41,21 @@ class ColumnsRepository {
     });
   }
   
-  delete(key) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  delete(key: string): Promise<IColumn> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
           this.columns.delete(key);
-          resolve();
+          Promise.resolve();
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
         }
-        resolve();
+        Promise.resolve();
       }, 100);
     });
   }
 
-  _isItemExists(key) {
+  _isItemExists(key: string): boolean {
     return this.columns.has(key);
   }
 }
