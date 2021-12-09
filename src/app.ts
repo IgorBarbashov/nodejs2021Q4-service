@@ -1,12 +1,8 @@
-const Koa = require('koa');
-const bodyParser = require('koa-bodyparser');
-const { router } = require('./resources');
+import Koa from 'koa';
+import bodyParser from 'koa-bodyparser';
+import { router } from './resources';
 
-const app = new Koa();
+export const app = new Koa();
 
 app.use(bodyParser());
 app.use(router());
-
-module.exports = {
-    app
-};

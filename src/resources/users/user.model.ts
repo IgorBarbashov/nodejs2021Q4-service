@@ -1,6 +1,13 @@
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
 
-class User {
+interface IUser {
+  id: string;
+  name: string;
+  login: string;
+  password: string;
+}
+
+export class User implements IUser {
   constructor({
     id = uuidv4(),
     name = 'USER',
@@ -23,7 +30,3 @@ class User {
     return { name, login, password };
   }
 }
-
-module.exports = {
-  User
-};

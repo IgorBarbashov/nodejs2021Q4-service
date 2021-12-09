@@ -1,8 +1,8 @@
-const { User } = require('./user.model');
-const { usersRepository } = require('./user.memory.repository');
-const { TasksService } = require('../tasks/tasks.service');
+import { User } from './user.model';
+import { usersRepository } from './user.memory.repository';
+import { TasksService } from '../tasks/tasks.service';
 
-class UsersService {
+export class UsersService {
     static async getAll() {
         const users = [ ...(await usersRepository.getAll()).values() ];
         return users;
@@ -31,8 +31,4 @@ class UsersService {
         await usersRepository.delete(id);
         await TasksService.unassignUser(id);
     }
-};
-
-module.exports = {
-    UsersService
 };

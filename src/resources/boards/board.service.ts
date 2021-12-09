@@ -1,9 +1,9 @@
-const { Board } = require('./board.model');
-const { boardsRepository } = require('./board.memory.repository');
-const { ColumnsService } = require('../columns/column.service');
-const { TasksService } = require('../tasks/tasks.service');
+import { Board } from './board.model';
+import { boardsRepository } from './board.memory.repository';
+import { ColumnsService } from '../columns/column.service';
+import { TasksService } from '../tasks/tasks.service';
 
-class BoardsService {
+export class BoardsService {
     static async _columnsIdToObject(columnsIds) {
         const columnsPromises = columnsIds.map(ColumnsService.getById);
         const columns = await Promise.all(columnsPromises);
@@ -60,8 +60,4 @@ class BoardsService {
         });
         await Promise.all(tasksPromises);
     }
-};
-
-module.exports = {
-    BoardsService
 };

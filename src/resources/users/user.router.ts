@@ -1,9 +1,9 @@
-const Router = require('@koa/router');
-const { StatusCodes } = require('http-status-codes');
-const { User } = require('./user.model');
-const { UsersService } = require('./user.service');
+import Router from '@koa/router';
+import { StatusCodes } from 'http-status-codes';
+import { User } from './user.model';
+import { UsersService } from './user.service';
 
-const usersRouter = new Router({ prefix: '/users' })
+export const usersRouter = new Router({ prefix: '/users' })
 
 usersRouter.get('/', async (ctx) => {
     const users = await UsersService.getAll();
@@ -35,7 +35,3 @@ usersRouter.delete('/:id', async (ctx) => {
     await UsersService.delete(id);
     ctx.status = StatusCodes.NO_CONTENT;
 });
-
-module.exports = {
-    usersRouter
-};

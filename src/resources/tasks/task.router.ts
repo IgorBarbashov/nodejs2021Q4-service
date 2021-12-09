@@ -1,9 +1,9 @@
-const Router = require('@koa/router');
-const { StatusCodes } = require('http-status-codes');
-const { Task } = require('./task.model');
-const { TasksService } = require('./tasks.service');
+import Router from '@koa/router';
+import { StatusCodes } from 'http-status-codes';
+import { Task } from './task.model';
+import { TasksService } from './tasks.service';
 
-const tasksRouter = new Router({ prefix: '/boards' })
+export const tasksRouter = new Router({ prefix: '/boards' })
 
 tasksRouter.get('/:boardId/tasks', async (ctx) => {
     const tasks = await TasksService.getAll();
@@ -40,7 +40,3 @@ tasksRouter.delete('/:boardId/tasks/:taskId', async (ctx) => {
     await TasksService.delete(taskId);
     ctx.status = StatusCodes.NO_CONTENT;
 });
-
-module.exports = {
-    tasksRouter
-};

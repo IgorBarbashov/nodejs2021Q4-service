@@ -1,4 +1,4 @@
-const { REPOSITORY_ERROR_MESSAGES } = require('../../constants');
+import { REPOSITORY_ERROR_MESSAGES } from '../../constants';
 
 class UsersRepository {
   constructor() {
@@ -71,8 +71,4 @@ class UsersRepository {
   }
 }
 
-const usersRepository = new UsersRepository();
-
-module.exports = {
-  usersRepository
-};
+export const usersRepository = new UsersRepository();

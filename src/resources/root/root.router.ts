@@ -1,10 +1,10 @@
-const Router = require('@koa/router');
-const { usersRepository } = require('../users/user.memory.repository');
-const { boardsRepository } = require('../boards/board.memory.repository');
-const { columnsRepository } = require('../columns/column.memory.repository');
-const { tasksRepository } = require('../tasks/task.memory.repository');
+import Router from '@koa/router';
+import { usersRepository } from '../users/user.memory.repository';
+import { boardsRepository } from '../boards/board.memory.repository';
+import { columnsRepository } from '../columns/column.memory.repository';
+import { tasksRepository } from '../tasks/task.memory.repository';
 
-const rootRouter = new Router();
+export const rootRouter = new Router();
 
 rootRouter.get('/', async (ctx) => {
     ctx.body = 'Service is running!';
@@ -24,7 +24,3 @@ rootRouter.get('/db', async (ctx) => {
     };
     ctx.body = state;
 });
-
-module.exports = {
-    rootRouter
-};

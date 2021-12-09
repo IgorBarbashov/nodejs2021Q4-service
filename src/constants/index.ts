@@ -1,4 +1,4 @@
-const REPOSITORY_ERROR_MESSAGES = {
+export const REPOSITORY_ERROR_MESSAGES = {
     USERS: {
         NOT_FOUND: 'User not found, id: ',
         EXISTS: 'User already exists, id: '
@@ -15,8 +15,4 @@ const REPOSITORY_ERROR_MESSAGES = {
         NOT_FOUND: 'Task not found, id: ',
         EXISTS: 'Task already exists, id: '
     }
-};
-
-module.exports = {
-    REPOSITORY_ERROR_MESSAGES
 };

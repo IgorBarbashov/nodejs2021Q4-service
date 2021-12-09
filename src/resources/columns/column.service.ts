@@ -1,7 +1,7 @@
-const { Column } = require('./column.model');
-const { columnsRepository } = require('./column.memory.repository');
+import { Column } from './column.model';
+import { columnsRepository } from './column.memory.repository';
 
-class ColumnsService {
+export class ColumnsService {
     static async getAll() {
         const columns = [ ...(await columnsRepository.getAll()).values() ];
         return columns;
@@ -22,8 +22,4 @@ class ColumnsService {
     static async delete(id) {
         await columnsRepository.delete(id);
     }
-};
-
-module.exports = {
-    ColumnsService
 };

@@ -1,10 +1,10 @@
-const Router = require('@koa/router');
-const { StatusCodes } = require('http-status-codes');
-const { Board } = require('./board.model');
-const { Column } = require('../columns/column.model');
-const { BoardsService } = require('./board.service');
+import Router from '@koa/router';
+import { StatusCodes } from 'http-status-codes';
+import { Board } from './board.model';
+import { Column } from '../columns/column.model';
+import { BoardsService } from './board.service';
 
-const boardsRouter = new Router({ prefix: '/boards' })
+export const boardsRouter = new Router({ prefix: '/boards' })
 
 boardsRouter.get('/', async (ctx) => {
     const boards = await BoardsService.getAll();
@@ -63,7 +63,3 @@ boardsRouter.delete('/:id', async (ctx) => {
         ctx.status = StatusCodes.NOT_FOUND;
     }
 });
-
-module.exports = {
-    boardsRouter
-};
