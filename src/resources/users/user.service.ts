@@ -1,33 +1,34 @@
 import { User } from './user.model';
 import { usersRepository } from './user.memory.repository';
 import { TasksService } from '../tasks/tasks.service';
+import { IUser, IUserResponse } from './user.interfaces';
 
 export class UsersService {
-    static async getAll() {
+    static async getAll(): Promise<IUserResponse[]> {
         const users = [ ...(await usersRepository.getAll()).values() ];
-        return users;
+        return users.map(User.toResponse);
     }
 
-    static async getById(id) {
+    static async getById(id: string): Promise<IUserResponse> {
         const user = await usersRepository.getById(id);
-        return user;
+        return User.toResponse(user);
     }
 
-    static async create(body) {
+    static async create(body: IUser): Promise<IUserResponse> {
         const bodyToRepository = User.toRepository(body);
         const user = new User(bodyToRepository);
         const addedUser = await usersRepository.add(user.id, user);
-        return addedUser;
+        return User.toResponse(addedUser);
     };
 
-    static async update(id, body) {
+    static async update(id: string, body: IUser): Promise<IUserResponse> {
         const bodyToRepository = User.toRepository(body);
         const user = { ...bodyToRepository, id };
         const updatedUser = await usersRepository.update(id, user);
-        return updatedUser;
+        return User.toResponse(updatedUser);
     }
 
-    static async delete(id) {
+    static async delete(id: string): Promise<void> {
         await usersRepository.delete(id);
         await TasksService.unassignUser(id);
     }

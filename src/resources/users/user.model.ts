@@ -1,13 +1,16 @@
 import { v4 as uuidv4 } from 'uuid';
-
-interface IUser {
-  id: string;
-  name: string;
-  login: string;
-  password: string;
-}
+import { IUser, IUserRepository, IUserResponse } from './user.interfaces';
 
 export class User implements IUser {
+  id;
+
+  name;
+
+  login;
+
+  password;
+
+
   constructor({
     id = uuidv4(),
     name = 'USER',
@@ -20,12 +23,12 @@ export class User implements IUser {
     this.password = password;
   }
 
-  static toResponse(user) {
+  static toResponse(user: IUser): IUserResponse {
     const { id, name, login } = user;
     return { id, name, login };
   }
 
-  static toRepository(user) {
+  static toRepository(user: IUser): IUserRepository {
     const { name, login, password } = user;
     return { name, login, password };
   }

@@ -50,7 +50,6 @@ class ColumnsRepository {
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
         }
-        Promise.resolve();
       }, 100);
     });
   }
