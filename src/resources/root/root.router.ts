@@ -10,12 +10,21 @@ import { ITaskBD } from '../tasks/task.interfaces';
 
 type EntityBd = IUserBD | IBoardBD | IColumnBD | ITaskBD;
 
+/**
+ * Create root Route
+ */
 export const rootRouter = new Router();
 
+/**
+ * Register root Route
+ */
 rootRouter.get('/', async (ctx) => {
     ctx.body = 'Service is running!';
 });
 
+/**
+ * Register Route to watch all DB
+ */
 rootRouter.get('/db', async (ctx) => {
     const mapToObj = (map: EntityBd) => [...map.entries()].reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
     const users = await usersRepository.getAll();

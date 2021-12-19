@@ -5,6 +5,9 @@ import { usersRouter } from './users/user.router';
 import { boardsRouter } from './boards/board.router';
 import { tasksRouter } from './tasks/task.router';
 
+/**
+ * Utility function to combine all routers
+ */
 export const router = combineRouters(
   rootRouter,
   docRouter,
