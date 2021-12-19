@@ -3,7 +3,7 @@ import { IColumn, IColumnBD } from './column.interfaces';
 
 class ColumnsRepository {
   /**
-   * In-memory DB fo Column entities
+   * In-memory DB of Column entities
    */
   columns: IColumnBD;
 
@@ -17,7 +17,7 @@ class ColumnsRepository {
   /**
    * Read from DB collection of all Column entities
    * 
-   * @returns Collection of all Column entities
+   * @returns Promise that will resolve with Collection of all Column entities
    */
   getAll(): Promise<IColumnBD> {
     return new Promise((resolve) => {
@@ -31,7 +31,7 @@ class ColumnsRepository {
    * Read from DB Column entity with requested id
    * 
    * @param key - Id of requested Column entity
-   * @returns Requested column entity
+   * @returns Promise that will resolve with requested Column entity or rejected if error was occurred
    */
   getById(key: string): Promise<IColumn> {
     return new Promise((resolve, reject) => {
@@ -46,11 +46,11 @@ class ColumnsRepository {
   }
 
   /**
-   * Add to DB new Column
+   * Add to DB new Column entity
    * 
    * @param key - Id of new Column entity
    * @param value - New Column entity
-   * @returns Added Column entity
+   * @returns Promise that will resolve with added Column entity or rejected if error was occurred
    */
   add(key: string, value: IColumn): Promise<IColumn> {
     return new Promise((resolve, reject) => {
@@ -66,16 +66,17 @@ class ColumnsRepository {
   }
   
   /**
-   * Delete from DB Column with requested if
+   * Delete from DB Column entity with requested id
    * 
    * @param key - Id of Column entity that should be deleted
+   * @returns Promise that will resolve or rejected if error was occurred
    */
-  delete(key: string): Promise<IColumn> {
+  delete(key: string): Promise<void> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
           this.columns.delete(key);
-          Promise.resolve();
+          resolve();
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
         }
@@ -84,10 +85,10 @@ class ColumnsRepository {
   }
 
   /**
-   * Check if Column entity with requested id exists in DB
+   * Check if Column entity with requested id is exists in DB
    * 
    * @param key - Id for check
-   * @returns True - if entity with requested Id is exists in DB, false - if not
+   * @returns True - if entity with requested id is exists in DB, false - if not
    */
   _isItemExists(key: string): boolean {
     return this.columns.has(key);
