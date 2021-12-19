@@ -1,14 +1,14 @@
 const { REPOSITORY_ERROR_MESSAGES } = require('../../constants');
 
-class UsersRepository {
+class ColumnsRepository {
   constructor() {
-    this.users = new Map();
+    this.columns = new Map();
   }
 
   getAll() {
     return new Promise((resolve) => { // aka async request to db
       setTimeout(() => {
-        resolve(this.users);
+        resolve(this.columns);
       }, 100);
     });
   }
@@ -17,9 +17,9 @@ class UsersRepository {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          resolve(this.users.get(key));
+          resolve(this.columns.get(key));
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
@@ -29,37 +29,23 @@ class UsersRepository {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.EXISTS}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.EXISTS}${key}`));
         } else {
-          this.users.set(key, value);
+          this.columns.set(key, value);
           resolve(value);
         }
       }, 100);
     });
   }
   
-  update(key, value) {
-    return new Promise((resolve, reject) => { // aka async request to db
-      setTimeout(() => {
-        if (this._isItemExists(key)) {
-          this.users.set(key, value);
-          resolve(value);
-        } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
-        }
-        resolve();
-      }, 100);
-    });
-  }
-
   delete(key) {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          this.users.delete(key);
+          this.columns.delete(key);
           resolve();
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
         }
         resolve();
       }, 100);
@@ -67,12 +53,12 @@ class UsersRepository {
   }
 
   _isItemExists(key) {
-    return this.users.has(key);
+    return this.columns.has(key);
   }
 }
 
-const usersRepository = new UsersRepository();
+const columnsRepository = new ColumnsRepository();
 
 module.exports = {
-  usersRepository
+  columnsRepository
 };

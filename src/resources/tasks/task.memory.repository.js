@@ -1,14 +1,14 @@
 const { REPOSITORY_ERROR_MESSAGES } = require('../../constants');
 
-class UsersRepository {
+class TasksRepository {
   constructor() {
-    this.users = new Map();
+    this.tasks = new Map();
   }
 
   getAll() {
     return new Promise((resolve) => { // aka async request to db
       setTimeout(() => {
-        resolve(this.users);
+        resolve(this.tasks);
       }, 100);
     });
   }
@@ -17,9 +17,9 @@ class UsersRepository {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          resolve(this.users.get(key));
+          resolve(this.tasks.get(key));
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
@@ -29,9 +29,9 @@ class UsersRepository {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.EXISTS}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.EXISTS}${key}`));
         } else {
-          this.users.set(key, value);
+          this.tasks.set(key, value);
           resolve(value);
         }
       }, 100);
@@ -42,10 +42,10 @@ class UsersRepository {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          this.users.set(key, value);
+          this.tasks.set(key, value);
           resolve(value);
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
         resolve();
       }, 100);
@@ -56,23 +56,36 @@ class UsersRepository {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          this.users.delete(key);
+          this.tasks.delete(key);
           resolve();
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
         resolve();
       }, 100);
     });
   }
 
+  unassignUser(userId) {
+    return new Promise((resolve) => { // aka async request to db
+      setTimeout(() => {
+        this.tasks.forEach((value, key, map) => {
+          if (value.userId === userId) {
+            map.set(key, { ...value, userId: null });
+          }
+        });
+        resolve();
+      }, 100);
+    });
+  }
+
   _isItemExists(key) {
-    return this.users.has(key);
+    return this.tasks.has(key);
   }
 }
 
-const usersRepository = new UsersRepository();
+const tasksRepository = new TasksRepository();
 
 module.exports = {
-  usersRepository
+  tasksRepository
 };

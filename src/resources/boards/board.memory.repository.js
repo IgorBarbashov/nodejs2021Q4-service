@@ -1,14 +1,14 @@
 const { REPOSITORY_ERROR_MESSAGES } = require('../../constants');
 
-class UsersRepository {
+class BoardsRepository {
   constructor() {
-    this.users = new Map();
+    this.boards = new Map();
   }
 
   getAll() {
     return new Promise((resolve) => { // aka async request to db
       setTimeout(() => {
-        resolve(this.users);
+        resolve(this.boards);
       }, 100);
     });
   }
@@ -17,9 +17,9 @@ class UsersRepository {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          resolve(this.users.get(key));
+          resolve(this.boards.get(key));
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
@@ -29,9 +29,9 @@ class UsersRepository {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.EXISTS}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.EXISTS}${key}`));
         } else {
-          this.users.set(key, value);
+          this.boards.set(key, value);
           resolve(value);
         }
       }, 100);
@@ -42,10 +42,10 @@ class UsersRepository {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          this.users.set(key, value);
+          this.boards.set(key, value);
           resolve(value);
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
         resolve();
       }, 100);
@@ -56,10 +56,10 @@ class UsersRepository {
     return new Promise((resolve, reject) => { // aka async request to db
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          this.users.delete(key);
+          this.boards.delete(key);
           resolve();
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
         resolve();
       }, 100);
@@ -67,12 +67,12 @@ class UsersRepository {
   }
 
   _isItemExists(key) {
-    return this.users.has(key);
+    return this.boards.has(key);
   }
 }
 
-const usersRepository = new UsersRepository();
+const boardsRepository = new BoardsRepository();
 
 module.exports = {
-  usersRepository
+  boardsRepository
 };
