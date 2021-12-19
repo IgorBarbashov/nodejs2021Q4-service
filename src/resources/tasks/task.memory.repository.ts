@@ -1,23 +1,26 @@
 import { REPOSITORY_ERROR_MESSAGES } from '../../constants';
+import { ITask, ITaskBD } from './task.interfaces';
 
 class TasksRepository {
+  tasks: ITaskBD;
+
   constructor() {
     this.tasks = new Map();
   }
 
-  getAll() {
-    return new Promise((resolve) => { // aka async request to db
+  getAll(): Promise<ITaskBD> {
+    return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.tasks);
       }, 100);
     });
   }
 
-  getById(key) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  getById(key: string): Promise<ITask> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          resolve(this.tasks.get(key));
+          resolve(this.tasks.get(key) as ITask);
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
@@ -25,8 +28,8 @@ class TasksRepository {
     });
   }
 
-  add(key, value) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  add(key: string, value: ITask): Promise<ITask> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.EXISTS}${key}`));
@@ -38,8 +41,8 @@ class TasksRepository {
     });
   }
   
-  update(key, value) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  update(key: string, value: ITask): Promise<ITask> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
           this.tasks.set(key, value);
@@ -47,13 +50,12 @@ class TasksRepository {
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
-        resolve();
       }, 100);
     });
   }
 
-  delete(key) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  delete(key: string): Promise<void> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
           this.tasks.delete(key);
@@ -61,13 +63,12 @@ class TasksRepository {
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
-        resolve();
       }, 100);
     });
   }
 
-  unassignUser(userId) {
-    return new Promise((resolve) => { // aka async request to db
+  unassignUser(userId: string): Promise<void> {
+    return new Promise((resolve) => {
       setTimeout(() => {
         this.tasks.forEach((value, key, map) => {
           if (value.userId === userId) {
@@ -79,7 +80,7 @@ class TasksRepository {
     });
   }
 
-  _isItemExists(key) {
+  _isItemExists(key: string): boolean {
     return this.tasks.has(key);
   }
 }

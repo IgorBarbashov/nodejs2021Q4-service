@@ -10,14 +10,12 @@ export class User implements IUser {
 
   password;
 
-
   constructor({
-    id = uuidv4(),
     name = 'USER',
     login = 'user',
     password = 'P@55w0rd'
-  } = {}) {
-    this.id = id;
+  }: IUserRepository) {
+    this.id = uuidv4();
     this.name = name;
     this.login = login;
     this.password = password;

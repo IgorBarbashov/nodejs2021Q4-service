@@ -1,23 +1,26 @@
 import { REPOSITORY_ERROR_MESSAGES } from '../../constants';
+import { IBoardFromRepository, IBoardBD } from './board.interfaces';
 
 class BoardsRepository {
+  boards: IBoardBD;
+
   constructor() {
     this.boards = new Map();
   }
 
-  getAll() {
-    return new Promise((resolve) => { // aka async request to db
+  getAll(): Promise<IBoardBD> {
+    return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.boards);
       }, 100);
     });
   }
 
-  getById(key) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  getById(key: string): Promise<IBoardFromRepository> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          resolve(this.boards.get(key));
+          resolve((this.boards.get(key) as IBoardFromRepository));
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
@@ -25,8 +28,8 @@ class BoardsRepository {
     });
   }
 
-  add(key, value) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  add(key: string, value: IBoardFromRepository): Promise<IBoardFromRepository> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.EXISTS}${key}`));
@@ -38,8 +41,8 @@ class BoardsRepository {
     });
   }
   
-  update(key, value) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  update(key: string, value: IBoardFromRepository): Promise<IBoardFromRepository> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
           this.boards.set(key, value);
@@ -47,13 +50,12 @@ class BoardsRepository {
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
-        resolve();
       }, 100);
     });
   }
 
-  delete(key) {
-    return new Promise((resolve, reject) => { // aka async request to db
+  delete(key: string): Promise<void> {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
           this.boards.delete(key);
@@ -61,12 +63,11 @@ class BoardsRepository {
         } else {
           reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
-        resolve();
       }, 100);
     });
   }
 
-  _isItemExists(key) {
+  _isItemExists(key: string): boolean {
     return this.boards.has(key);
   }
 }

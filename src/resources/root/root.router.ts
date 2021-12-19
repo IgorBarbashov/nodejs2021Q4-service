@@ -3,6 +3,12 @@ import { usersRepository } from '../users/user.memory.repository';
 import { boardsRepository } from '../boards/board.memory.repository';
 import { columnsRepository } from '../columns/column.memory.repository';
 import { tasksRepository } from '../tasks/task.memory.repository';
+import { IUserBD } from '../users/user.interfaces';
+import { IBoardBD } from '../boards/board.interfaces';
+import { IColumnBD } from '../columns/column.interfaces';
+import { ITaskBD } from '../tasks/task.interfaces';
+
+type EntityBd = IUserBD | IBoardBD | IColumnBD | ITaskBD;
 
 export const rootRouter = new Router();
 
@@ -11,7 +17,7 @@ rootRouter.get('/', async (ctx) => {
 });
 
 rootRouter.get('/db', async (ctx) => {
-    const mapToObj = map => [...map.entries()].reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+    const mapToObj = (map: EntityBd) => [...map.entries()].reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
     const users = await usersRepository.getAll();
     const boards = await boardsRepository.getAll();
     const columns = await columnsRepository.getAll();

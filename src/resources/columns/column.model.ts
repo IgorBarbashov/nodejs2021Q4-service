@@ -9,11 +9,10 @@ export class Column implements IColumn {
   order;
   
   constructor({
-    id = uuidv4(),
     title = 'COLUMN',
     order = 0
-  } = {}) {
-    this.id = id;
+  }: IColumnRepository) {
+    this.id = uuidv4();
     this.title = title;
     this.order = order;
   }
