@@ -2,12 +2,23 @@ import { REPOSITORY_ERROR_MESSAGES } from '../../constants';
 import { ITask, ITaskBD } from './task.interfaces';
 
 class TasksRepository {
+  /**
+   * In-memory DB of Task entities
+   */
   tasks: ITaskBD;
 
+  /**
+   * Initialize data structure for save Task entities in In-memory DB
+   */
   constructor() {
     this.tasks = new Map();
   }
 
+  /**
+   * Read from DB collection of all Task entities
+   * 
+   * @returns Promise that will resolve with Collection of all Task entities
+   */
   getAll(): Promise<ITaskBD> {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -16,6 +27,12 @@ class TasksRepository {
     });
   }
 
+  /**
+   * Read from DB Task entity with requested id
+   * 
+   * @param key - Id of requested Task entity
+   * @returns  Promise that will resolve with requested Task entity or rejected if error was occurred or entity wasn't found
+   */
   getById(key: string): Promise<ITask> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -28,6 +45,13 @@ class TasksRepository {
     });
   }
 
+  /**
+   * Add to DB new Task entity
+   * 
+   * @param key - Id of new Task entity
+   * @param value - New Task entity
+   * @returns Promise that will resolve with added Task entity or rejected if error was occurred or entity with requested id already exists
+   */
   add(key: string, value: ITask): Promise<ITask> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -41,6 +65,13 @@ class TasksRepository {
     });
   }
   
+  /**
+   * Update existed Task entity in DB
+   * 
+   * @param key - Id of Task entity to update
+   * @param value - Task entity to update
+   * @returns Promise that will resolve with updated Task entity or rejected if error was occurred or entity wasn't found
+   */
   update(key: string, value: ITask): Promise<ITask> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -54,6 +85,12 @@ class TasksRepository {
     });
   }
 
+  /**
+   * Delete from DB Task entity with requested id
+   * 
+   * @param key - Id of Task entity that should be deleted
+   * @returns Promise that will resolve or rejected if error was occurred or entity wasn't found
+   */
   delete(key: string): Promise<void> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -67,6 +104,12 @@ class TasksRepository {
     });
   }
 
+  /**
+   * Set in Task entities, that related to defined User, field userId to null
+   * 
+   * @param userId - Id of defined User
+   * @returns Promise that will resolve or rejected if error was occurred
+   */
   unassignUser(userId: string): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -80,6 +123,12 @@ class TasksRepository {
     });
   }
 
+  /**
+   * Check if Task entity with requested id is exists in DB
+   * 
+   * @param key - Id for check
+   * @returns True - if entity with requested id is exists in DB, false - if not
+   */
   _isItemExists(key: string): boolean {
     return this.tasks.has(key);
   }
