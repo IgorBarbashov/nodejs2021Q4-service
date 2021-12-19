@@ -53,7 +53,7 @@ export class UsersService {
     }
 
     /**
-     * Send to Repository layer request to delete User entity by id
+     * Send to Repository layer request to delete User entity by id and update related Task entities by set for it userId field to null
      * 
      * @param id - Id of the entity that should be deleted
      * @returns Promise that will resolve if entity was deleted or rejected if error was occurred

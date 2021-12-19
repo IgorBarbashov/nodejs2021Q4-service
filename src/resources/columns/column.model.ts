@@ -11,7 +11,7 @@ export class Column implements IColumn {
   /**
    * Initialize Column entity fields and generate id for entity in uuid format
    * 
-   * @param param0 - Initial object accorded interface IColumnRepository
+   * @param Object - Initial object accorded interface IColumnRepository
    */
   constructor({
     title = 'COLUMN',

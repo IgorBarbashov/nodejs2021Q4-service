@@ -13,7 +13,7 @@ export class User implements IUser {
   /**
    * Initialize User entity fields and generate id for entity in uuid format
    * 
-   * @param param0 - Initial object accorded interface IUserRepository
+   * @param Object - Initial object accorded interface IUserRepository
    */
   constructor({
     name = 'USER',

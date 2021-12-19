@@ -2,12 +2,23 @@ import { REPOSITORY_ERROR_MESSAGES } from '../../constants';
 import { IBoardFromRepository, IBoardBD } from './board.interfaces';
 
 class BoardsRepository {
+  /**
+   * In-memory DB of Board entities
+   */
   boards: IBoardBD;
 
+  /**
+   * Initialize data structure for save Board entities in In-memory DB
+   */
   constructor() {
     this.boards = new Map();
   }
 
+  /**
+   * Read from DB collection of all Board entities
+   * 
+   * @returns Promise that will resolve with Collection of all Board entities
+   */
   getAll(): Promise<IBoardBD> {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -16,6 +27,12 @@ class BoardsRepository {
     });
   }
 
+  /**
+   * Read from DB Board entity with requested id
+   * 
+   * @param key - Id of requested Board entity
+   * @returns  Promise that will resolve with requested Board entity or rejected if error was occurred or entity wasn't found
+   */
   getById(key: string): Promise<IBoardFromRepository> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -28,6 +45,13 @@ class BoardsRepository {
     });
   }
 
+  /**
+   * Add to DB new Board entity
+   * 
+   * @param key - Id of new Board entity
+   * @param value - New Board entity
+   * @returns Promise that will resolve with added Board entity or rejected if error was occurred or entity with requested id already exists
+   */
   add(key: string, value: IBoardFromRepository): Promise<IBoardFromRepository> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -41,6 +65,13 @@ class BoardsRepository {
     });
   }
   
+  /**
+   * Update existed Board entity in DB
+   * 
+   * @param key - Id of Board entity to update
+   * @param value - Board entity to update
+   * @returns Promise that will resolve with updated Board entity or rejected if error was occurred or entity wasn't found
+   */
   update(key: string, value: IBoardFromRepository): Promise<IBoardFromRepository> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -54,6 +85,12 @@ class BoardsRepository {
     });
   }
 
+  /**
+   * Delete from DB Board entity with requested id
+   * 
+   * @param key - Id of Board entity that should be deleted
+   * @returns  Promise that will resolve or rejected if error was occurred or entity wasn't found
+   */
   delete(key: string): Promise<void> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -67,6 +104,12 @@ class BoardsRepository {
     });
   }
 
+  /**
+   * Check if Board entity with requested id is exists in DB
+   * 
+   * @param key - Id for check
+   * @returns True - if entity with requested id is exists in DB, false - if not
+   */
   _isItemExists(key: string): boolean {
     return this.boards.has(key);
   }
