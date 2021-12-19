@@ -1,3 +1,5 @@
+import { Context } from 'koa'
+
 export interface IUser {
   id: string;
   name: string;
@@ -18,3 +20,15 @@ export interface IUserResponse {
 }
 
 export type IUserBD = Map<string, IUser>;
+
+export interface IUserResponseContext extends Context {
+  body: IUserResponse
+}
+
+export interface IAllUserResponseContext extends Context {
+  body: IUserResponse[]
+}
+
+export interface IRequestUserContext extends Context {
+  body: IUserRepository[]
+}
