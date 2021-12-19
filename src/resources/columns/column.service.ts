@@ -27,7 +27,7 @@ export class ColumnsService {
     /**
      * Send to Repository layer request to create new Column entity
      * 
-     * @param body - New object from Router layer that described Column entity accorded IColumn interface
+     * @param body - Object from Router layer that described Column entity accorded IColumn interface
      * @returns Promise that will resolve with created Column entity or rejected if error was occurred
      */    
     static async create(body: IColumn): Promise<IColumn> {
@@ -41,7 +41,7 @@ export class ColumnsService {
      * Send to Repository layer request to delete Column entity by id
      * 
      * @param id - Id of the entity that should be deleted
-     * @returns Promise that will resolve if entity was deleted or rejected if error was occurred
+     * @returns Promise that will resolve if entity was deleted
      */
     static async delete(id: string): Promise<void> {
         await columnsRepository.delete(id);

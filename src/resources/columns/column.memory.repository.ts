@@ -31,7 +31,7 @@ class ColumnsRepository {
    * Read from DB Column entity with requested id
    * 
    * @param key - Id of requested Column entity
-   * @returns Promise that will resolve with requested Column entity or rejected if error was occurred
+   * @returns Promise that will resolve with requested Column entity or rejected if error was occurred or entity wasn't found
    */
   getById(key: string): Promise<IColumn> {
     return new Promise((resolve, reject) => {
@@ -50,7 +50,7 @@ class ColumnsRepository {
    * 
    * @param key - Id of new Column entity
    * @param value - New Column entity
-   * @returns Promise that will resolve with added Column entity or rejected if error was occurred
+   * @returns Promise that will resolve with added Column entity or rejected if error was occurred or entity with requested id already exists
    */
   add(key: string, value: IColumn): Promise<IColumn> {
     return new Promise((resolve, reject) => {
