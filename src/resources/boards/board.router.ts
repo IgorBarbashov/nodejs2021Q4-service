@@ -1,4 +1,4 @@
-import Router from '@koa/router';
+import Router from 'koa-router';
 import { StatusCodes } from 'http-status-codes';
 import { Board } from './board.model';
 import { Column } from '../columns/column.model';

@@ -1,4 +1,4 @@
-import Router from '@koa/router';
+import Router from 'koa-router';
 import { koaSwagger } from 'koa2-swagger-ui';
 import path from 'path';
 import yamljs from 'yamljs';

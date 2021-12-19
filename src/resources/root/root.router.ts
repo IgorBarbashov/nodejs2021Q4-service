@@ -1,4 +1,4 @@
-import Router from '@koa/router';
+import Router from 'koa-router';
 import { usersRepository } from '../users/user.memory.repository';
 import { boardsRepository } from '../boards/board.memory.repository';
 import { columnsRepository } from '../columns/column.memory.repository';
