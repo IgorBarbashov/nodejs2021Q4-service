@@ -7,7 +7,7 @@ import yamljs from 'yamljs';
  * Create Doc Route
  */
 export const docRouter = new Router({ prefix: '/doc' });
-const spec = yamljs.load(path.join(__dirname, '../../../doc/api.yaml'));
+const spec = <Record<string, unknown>>yamljs.load(path.join(__dirname, '../../../doc/api.yaml'));
 
 /**
  * Register Route to watch Swagger documentation

@@ -2,6 +2,8 @@ import Router from 'koa-router';
 import { StatusCodes } from 'http-status-codes';
 import { Task } from './task.model';
 import { TasksService } from './tasks.service';
+import { IRouterContext } from '../common/common.interfaces';
+import { ITask } from './task.interfaces';
 
 /**
  * Create Route to manage Task entities
@@ -11,7 +13,7 @@ export const tasksRouter = new Router({ prefix: '/boards' })
 /**
  * Register Route to request collection of all Task entity
  */
-tasksRouter.get('/:boardId/tasks', async (ctx) => {
+tasksRouter.get('/:boardId/tasks', async (ctx: IRouterContext<ITask[], ITask[]>) => {
     const tasks = await TasksService.getAll();
     ctx.body = tasks.map(Task.toResponse);
 });
@@ -19,7 +21,7 @@ tasksRouter.get('/:boardId/tasks', async (ctx) => {
 /**
  * Register Route to request Task entity by id
  */
-tasksRouter.get('/:boardId/tasks/:taskId', async (ctx) => {
+tasksRouter.get('/:boardId/tasks/:taskId', async (ctx: IRouterContext<ITask, ITask>) => {
     try {
         const { taskId } = ctx.params;
         const task = await TasksService.getById(taskId);
@@ -32,9 +34,9 @@ tasksRouter.get('/:boardId/tasks/:taskId', async (ctx) => {
 /**
  * Register Route to create new Task entity
  */
-tasksRouter.post('/:boardId/tasks', async (ctx) => {
+tasksRouter.post('/:boardId/tasks', async (ctx: IRouterContext<ITask, ITask>) => {
     const { boardId } = ctx.params;
-    const { body } = ctx.request;
+    const body = <ITask>ctx.request.body;
     const task = await TasksService.create(boardId, body);
     ctx.status = StatusCodes.CREATED;
     ctx.body = Task.toResponse(task);
@@ -43,9 +45,9 @@ tasksRouter.post('/:boardId/tasks', async (ctx) => {
 /**
  * Register Route to update existed Task entity
  */
-tasksRouter.put('/:boardId/tasks/:taskId', async (ctx) => {
+tasksRouter.put('/:boardId/tasks/:taskId', async (ctx: IRouterContext<ITask, ITask>) => {
     const { taskId } = ctx.params;
-    const { body } = ctx.request;
+    const body = <ITask>ctx.request.body;
     const task = await TasksService.update(taskId, body);
     ctx.body = Task.toResponse(task);
 });

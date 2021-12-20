@@ -3,6 +3,8 @@ import { StatusCodes } from 'http-status-codes';
 import { Board } from './board.model';
 import { Column } from '../columns/column.model';
 import { BoardsService } from './board.service';
+import { IRouterContext } from '../common/common.interfaces';
+import { IBoard, IBoardResponse } from './board.interfaces';
 
 /**
  * Create Route to manage Board entities
@@ -12,7 +14,7 @@ export const boardsRouter = new Router({ prefix: '/boards' })
 /**
  * Register Route to request collection of all Board entity
  */
-boardsRouter.get('/', async (ctx) => {
+boardsRouter.get('/', async (ctx: IRouterContext<IBoard[], IBoardResponse[]>) => {
     const boards = await BoardsService.getAll();
     const boardsToResponse = boards.map(board => {
         const boardToResponse = Board.toResponse(board);
@@ -27,7 +29,7 @@ boardsRouter.get('/', async (ctx) => {
 /**
  * Register Route to request Board entity by id
  */
-boardsRouter.get('/:id', async (ctx) => {
+boardsRouter.get('/:id', async (ctx: IRouterContext<IBoard, IBoardResponse>) => {
     try {
         const { id } = ctx.params;
         const board = await BoardsService.getById(id);
@@ -44,8 +46,8 @@ boardsRouter.get('/:id', async (ctx) => {
 /**
  * Register Route to create new Board entity
  */
-boardsRouter.post('/', async (ctx) => {
-    const { body } = ctx.request;
+boardsRouter.post('/', async (ctx: IRouterContext<IBoard, IBoardResponse>) => {
+    const body = <IBoard>ctx.request.body;
     const board = await BoardsService.create(body);
     const boardToResponse = Board.toResponse(board);
     ctx.status = StatusCodes.CREATED;
@@ -58,9 +60,9 @@ boardsRouter.post('/', async (ctx) => {
 /**
  * Register Route to update existed Board entity
  */
-boardsRouter.put('/:id', async (ctx) => {
+boardsRouter.put('/:id', async (ctx: IRouterContext<IBoard, IBoardResponse>) => {
     const { id } = ctx.params;
-    const { body } = ctx.request;
+    const body = <IBoard>ctx.request.body;
     const board = await BoardsService.update(id, body);
     const boardToResponse = Board.toResponse(board);
     ctx.body = {
