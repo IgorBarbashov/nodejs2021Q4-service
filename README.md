@@ -72,9 +72,10 @@ REST service application which used in-memory database and builded on Koa framew
 
 ### Developer environment and instruments
 - Node 16.13.0
-- TypeScript 
+- TypeScript 4.5.2
 - Npm 8.1.0
 - Koa 2.13.4 - web framework for Node.js
 - Jest 27.3.1
 - Supertest 6.1.6
 - ESLint 8.3.0
+- TSDoc 0.0.4
