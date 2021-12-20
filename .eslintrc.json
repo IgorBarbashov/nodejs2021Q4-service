@@ -26,7 +26,10 @@
       }
     }
   },
-  "plugins": ["@typescript-eslint", "eslint-plugin-tsdoc"],
+  "plugins": [
+    "@typescript-eslint",
+    "eslint-plugin-tsdoc"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -40,6 +43,8 @@
     "node/no-unsupported-features/es-syntax": "off",
     "no-underscore-dangle": "off",
     "import/prefer-default-export": "off",
-    "@typescript-eslint/no-explicit-any": ["error"]
+    "@typescript-eslint/no-explicit-any": ["error"],
+    "@typescript-eslint/no-unsafe-assignment": ["error"],
+    "tsdoc/syntax": ["warn"]
   }
 }
