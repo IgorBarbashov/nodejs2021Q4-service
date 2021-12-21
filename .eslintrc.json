@@ -45,6 +45,11 @@
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-explicit-any": ["error"],
     "@typescript-eslint/no-unsafe-assignment": ["error"],
-    "tsdoc/syntax": ["warn"]
+    "tsdoc/syntax": ["warn"],
+    "node/no-missing-import": ["error", {
+      "allowModules": [],
+      "resolvePaths": ["/path/to/a/modules/directory"],
+      "tryExtensions": [".js", ".ts", ".json", ".node"]
+    }]
   }
 }
