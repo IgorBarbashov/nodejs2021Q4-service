@@ -1,8 +1,12 @@
 import winston from 'winston';
-import { Context, Request, Next } from 'koa';
+import { Context, Request, BaseResponse, Next } from 'koa';
 
 interface IRequestWithBody extends Request {
   body?: Record<string, unknown>;
+}
+
+interface IResponseWithBody extends BaseResponse {
+  body: Record<string, unknown>;
 }
 
 const winstonLogger = winston.createLogger({
@@ -13,15 +17,22 @@ const winstonLogger = winston.createLogger({
 });
 
 export const logger = async (ctx: Context, next: Next) => {
-  const { request } = ctx;
-  const { method, url, body = {} } = request as IRequestWithBody;
-
-  const start = (new Date).toLocaleString();
+  const { request, response } = ctx;
+  
+  const { method, url, body: requestBody = {} } = request as IRequestWithBody;
+  const requestDate = Date.now();
+  const requestDateLog = (new Date(requestDate)).toLocaleString();
   const [path, queryParameters] = url.split('?');
   const urlLog = `url=${path};`;
   const queryParametersLog = `${queryParameters ? ` query='${queryParameters}';` : ''}`;
-  const bodyLog = Object.entries(body).length ? ` body=${JSON.stringify(body)}` : '';
-  winstonLogger.info(`${start} - ${method} ${urlLog}${queryParametersLog}${bodyLog}`);
+  const requestBodyLog = Object.entries(requestBody).length ? ` body=${JSON.stringify(requestBody)}` : '';
+  winstonLogger.info(`${requestDateLog} request - ${method} ${urlLog}${queryParametersLog}${requestBodyLog}`);
 
-  next();
+  await next();
+  const { status, message, body: responseBody = {} } = response as IResponseWithBody;
+  const responseDate = Date.now();
+  const responseDateLog = (new Date(responseDate)).toLocaleString();
+  const msLog = `[${responseDate - requestDate}ms]`;
+  const responseBodyLog = Object.entries(responseBody).length ? ` body=${JSON.stringify(responseBody)}` : '';
+  winstonLogger.info(`${responseDateLog} response - ${msLog} '${status} ${message}'${responseBodyLog}`);
 };
