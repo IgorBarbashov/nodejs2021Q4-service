@@ -1,15 +1,24 @@
-const Router = require('@koa/router');
-const { StatusCodes } = require('http-status-codes');
-const { Task } = require('./task.model');
-const { TasksService } = require('./tasks.service');
+import Router from 'koa-router';
+import { StatusCodes } from 'http-status-codes';
+import { Task } from './task.model';
+import { TasksService } from './tasks.service';
 
-const tasksRouter = new Router({ prefix: '/boards' })
+/**
+ * Create Route to manage Task entities
+ */
+export const tasksRouter = new Router({ prefix: '/boards' })
 
+/**
+ * Register Route to request collection of all Task entity
+ */
 tasksRouter.get('/:boardId/tasks', async (ctx) => {
     const tasks = await TasksService.getAll();
     ctx.body = tasks.map(Task.toResponse);
 });
 
+/**
+ * Register Route to request Task entity by id
+ */
 tasksRouter.get('/:boardId/tasks/:taskId', async (ctx) => {
     try {
         const { taskId } = ctx.params;
@@ -20,6 +29,9 @@ tasksRouter.get('/:boardId/tasks/:taskId', async (ctx) => {
     }
 });
 
+/**
+ * Register Route to create new Task entity
+ */
 tasksRouter.post('/:boardId/tasks', async (ctx) => {
     const { boardId } = ctx.params;
     const { body } = ctx.request;
@@ -28,6 +40,9 @@ tasksRouter.post('/:boardId/tasks', async (ctx) => {
     ctx.body = Task.toResponse(task);
 });
 
+/**
+ * Register Route to update existed Task entity
+ */
 tasksRouter.put('/:boardId/tasks/:taskId', async (ctx) => {
     const { taskId } = ctx.params;
     const { body } = ctx.request;
@@ -35,12 +50,11 @@ tasksRouter.put('/:boardId/tasks/:taskId', async (ctx) => {
     ctx.body = Task.toResponse(task);
 });
 
+/**
+ * Register Route to delete existed Task entity
+ */
 tasksRouter.delete('/:boardId/tasks/:taskId', async (ctx) => {
     const { taskId } = ctx.params;
     await TasksService.delete(taskId);
     ctx.status = StatusCodes.NO_CONTENT;
 });
-
-module.exports = {
-    tasksRouter
-};

@@ -1,15 +1,15 @@
 # RS School - NodeJS Course - 2021 Q4
 
-## Task 4. REST service
+## Task 5. REST service - Typescript basics
 
 ### About
 REST service application which used in-memory database and builded on Koa framework
-- [Task page - REST service](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/rest-service.md)
+- [Task page - Typescript basics](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/typescript-basics.md)
 
 ### How to install
 - Install Node.js 16.13.0 or higher
 - Clone this repository
-- Switch to **task_4_rest_service** branch
+- Switch to **task-5-typescript-basics** branch
 - Install dependencies by command `npm i`
 
 ### How to use application and run tests
@@ -72,8 +72,10 @@ REST service application which used in-memory database and builded on Koa framew
 
 ### Developer environment and instruments
 - Node 16.13.0
+- TypeScript 4.5.2
 - Npm 8.1.0
 - Koa 2.13.4 - web framework for Node.js
 - Jest 27.3.1
 - Supertest 6.1.6
 - ESLint 8.3.0
+- TSDoc 0.0.4
