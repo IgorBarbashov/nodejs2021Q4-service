@@ -16,7 +16,7 @@ app.use(bodyParser());
 /**
  * Register logger middleware
  */
- app.use(logger);
+app.use(logger);
 
 /**
  * Register router middleware

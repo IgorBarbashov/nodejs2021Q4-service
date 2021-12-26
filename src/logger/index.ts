@@ -1,23 +1,27 @@
 import winston from 'winston';
-import { Context, Next } from 'koa';
+import { Context, Request, Next } from 'koa';
 
-const winstonLogger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  defaultMeta: { service: 'user-service' },
-  transports: [
-    new winston.transports.File({ filename: './logs/error.log', level: 'error' }),
-    new winston.transports.File({ filename: './logs/combined.log' }),
-  ],
-});
- 
-if (process.env.NODE_ENV !== 'production') {
-  winstonLogger.add(new winston.transports.Console({
-    format: winston.format.simple(),
-  }));
+interface IRequestWithBody extends Request {
+  body?: Record<string, unknown>;
 }
 
-export const logger = (ctx: Context, next: Next) => {
-  winstonLogger.info('Logger:', ctx.request.body);
-  return next();
+const winstonLogger = winston.createLogger({
+  transports: [
+    new winston.transports.Console({ format: winston.format.simple() }),
+    new winston.transports.File({ filename: './logs/common.log' })
+  ],
+});
+
+export const logger = async (ctx: Context, next: Next) => {
+  const { request } = ctx;
+  const { method, url, body = {} } = request as IRequestWithBody;
+
+  const start = (new Date).toLocaleString();
+  const [path, queryParameters] = url.split('?');
+  const urlLog = `url=${path};`;
+  const queryParametersLog = `${queryParameters ? ` query='${queryParameters}';` : ''}`;
+  const bodyLog = Object.entries(body).length ? ` body=${JSON.stringify(body)}` : '';
+  winstonLogger.info(`${start} - ${method} ${urlLog}${queryParametersLog}${bodyLog}`);
+
+  next();
 };
