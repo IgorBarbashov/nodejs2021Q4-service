@@ -59,7 +59,7 @@ const responseLogger = (response: IResponseWithBody, requestDate: number): void 
   const responseDateLog = (new Date(responseDate)).toLocaleString();
   const msLog = `[${responseDate - requestDate}ms]`;
   const responseBodyLog = Object.entries(responseBody).length || Array.isArray(responseBody) ? ` body=${JSON.stringify(responseBody)}` : '';
-  winstonLogger.log(LOGGING_LEVELS.NAME.info, `${responseDateLog} response - ${msLog} '${status} ${message}'${responseBodyLog}`);
+  winstonLogger.log(LOGGING_LEVELS.NAME.warn, `${responseDateLog} response - ${msLog} '${status} ${message}'${responseBodyLog}`);
 };
 
 const errorLogger = (err: Error) => {
