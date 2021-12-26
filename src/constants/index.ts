@@ -20,3 +20,24 @@ export const REPOSITORY_ERROR_MESSAGES = {
 export const EVENTS = {
     ERROR: 'error'
 }
+
+export const LOGGING_LEVELS = {
+    NAME: {
+        ERROR: 'ERROR',
+        WARN: 'WARN',
+        INFO: 'INFO',
+        DEBUG: 'DEBUG'
+    },
+    ORDER: {
+        ERROR: 0,
+        WARN: 1,
+        INFO: 2,
+        DEBUG: 3
+    },
+    COLOR: {
+        ERROR: 'blue',
+        WARN: 'green',
+        INFO: 'yellow',
+        DEBUG: 'red'
+    }
+};

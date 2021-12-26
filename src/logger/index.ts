@@ -1,7 +1,8 @@
 import winston from 'winston';
 import { StatusCodes } from 'http-status-codes';
 import { Context, Request, BaseResponse, Next } from 'koa';
-import { EVENTS } from '../constants/index';
+import { EVENTS, LOGGING_LEVELS } from '../constants/index';
+import { LOGGING_LEVEL } from '../common/config';
 
 interface IRequestWithBody extends Request {
   body?: Record<string, unknown>;
@@ -11,13 +12,33 @@ interface IResponseWithBody extends BaseResponse {
   body: Record<string, unknown>;
 }
 
+type allLevels = 'ERROR' | 'WARN' | 'INFO' | 'DEBUG';
+
+const globalLoggingLevel = LOGGING_LEVEL || LOGGING_LEVELS.NAME.INFO;
+const getActualLoggingLevel = (level: allLevels) =>
+  LOGGING_LEVELS.ORDER[level] < LOGGING_LEVELS.ORDER[globalLoggingLevel as allLevels] ? level : globalLoggingLevel;
+  
+
 const winstonLogger = winston.createLogger({
   transports: [
-    new winston.transports.Console({ format: winston.format.simple(), handleExceptions: true }),
-    new winston.transports.File({ level:'info', filename: './logs/common.log', handleExceptions: true }),
-    new winston.transports.File({ level:'error', filename: './logs/error.log', handleExceptions: true })
+    new winston.transports.Console({
+      format: winston.format.simple(),
+      handleExceptions: true,
+      level: getActualLoggingLevel('INFO')
+    }),
+    new winston.transports.File({
+      filename: './logs/common.log',
+      handleExceptions: true,
+      level: getActualLoggingLevel('INFO')
+    }),
+    new winston.transports.File({
+      filename: './logs/error.log',
+      handleExceptions: true,
+      level: getActualLoggingLevel('ERROR')
+    })
   ],
-  exitOnError: true
+  exitOnError: true,
+  levels: LOGGING_LEVELS.ORDER
 });
 
 const requestLogger = (request: IRequestWithBody): number => {
@@ -28,7 +49,7 @@ const requestLogger = (request: IRequestWithBody): number => {
   const urlLog = `url=${path};`;
   const queryParametersLog = `${queryParameters ? ` query='${queryParameters}';` : ''}`;
   const requestBodyLog = Object.entries(requestBody).length || Array.isArray(requestBody) ? ` body=${JSON.stringify(requestBody)}` : '';
-  winstonLogger.info(`${requestDateLog} request - ${method} ${urlLog}${queryParametersLog}${requestBodyLog}`);
+  winstonLogger.log(LOGGING_LEVELS.NAME.INFO, `${requestDateLog} request - ${method} ${urlLog}${queryParametersLog}${requestBodyLog}`);
   return requestDate;
 };
 
@@ -38,11 +59,11 @@ const responseLogger = (response: IResponseWithBody, requestDate: number): void 
   const responseDateLog = (new Date(responseDate)).toLocaleString();
   const msLog = `[${responseDate - requestDate}ms]`;
   const responseBodyLog = Object.entries(responseBody).length || Array.isArray(responseBody) ? ` body=${JSON.stringify(responseBody)}` : '';
-  winstonLogger.info(`${responseDateLog} response - ${msLog} '${status} ${message}'${responseBodyLog}`);
+  winstonLogger.log(LOGGING_LEVELS.NAME.INFO, `${responseDateLog} response - ${msLog} '${status} ${message}'${responseBodyLog}`);
 };
 
 const errorLogger = (err: Error) => {
-  winstonLogger.error(err.message);
+  winstonLogger.log(LOGGING_LEVELS.NAME.ERROR, err.message);
 };
 
 export const logger = async (ctx: Context, next: Next) => {
