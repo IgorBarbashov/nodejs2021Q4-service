@@ -13,10 +13,11 @@ interface IResponseWithBody extends BaseResponse {
 
 const winstonLogger = winston.createLogger({
   transports: [
-    new winston.transports.Console({ format: winston.format.simple() }),
-    new winston.transports.File({ level:'info', filename: './logs/common.log' }),
-    new winston.transports.File({ level:'error', filename: './logs/error.log' })
+    new winston.transports.Console({ format: winston.format.simple(), handleExceptions: true }),
+    new winston.transports.File({ level:'info', filename: './logs/common.log', handleExceptions: true }),
+    new winston.transports.File({ level:'error', filename: './logs/error.log', handleExceptions: true })
   ],
+  exitOnError: true
 });
 
 const requestLogger = (request: IRequestWithBody): number => {
