@@ -19,6 +19,8 @@ app.use(bodyParser());
  */
 app.use(logger);
 
+// throw Error('Oops!');
+
 /**
  * Register standard Repository layer errors handler (entity not found, entity already exists e.t.c.)
  */

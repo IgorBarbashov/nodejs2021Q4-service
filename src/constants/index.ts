@@ -23,21 +23,21 @@ export const EVENTS = {
 
 export const LOGGING_LEVELS = {
     NAME: {
-        ERROR: 'ERROR',
-        WARN: 'WARN',
-        INFO: 'INFO',
-        DEBUG: 'DEBUG'
+        error: 'error',
+        warn: 'warn',
+        info: 'info',
+        debug: 'debug'
     },
     ORDER: {
-        ERROR: 0,
-        WARN: 1,
-        INFO: 2,
-        DEBUG: 3
+        error: 0,
+        warn: 1,
+        info: 2,
+        debug: 3
     },
     COLOR: {
-        ERROR: 'blue',
-        WARN: 'green',
-        INFO: 'yellow',
-        DEBUG: 'red'
+        error: 'blue',
+        warn: 'green',
+        info: 'yellow',
+        debug: 'red'
     }
 };

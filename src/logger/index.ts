@@ -12,9 +12,9 @@ interface IResponseWithBody extends BaseResponse {
   body: Record<string, unknown>;
 }
 
-type allLevels = 'ERROR' | 'WARN' | 'INFO' | 'DEBUG';
+type allLevels = 'error' | 'warn' | 'info' | 'debug';
 
-const globalLoggingLevel = LOGGING_LEVEL || LOGGING_LEVELS.NAME.INFO;
+const globalLoggingLevel = LOGGING_LEVEL || LOGGING_LEVELS.NAME.info;
 const getActualLoggingLevel = (level: allLevels) =>
   LOGGING_LEVELS.ORDER[level] < LOGGING_LEVELS.ORDER[globalLoggingLevel as allLevels] ? level : globalLoggingLevel;
   
@@ -24,17 +24,17 @@ const winstonLogger = winston.createLogger({
     new winston.transports.Console({
       format: winston.format.simple(),
       handleExceptions: true,
-      level: getActualLoggingLevel('INFO')
+      level: getActualLoggingLevel('info')
     }),
     new winston.transports.File({
       filename: './logs/common.log',
       handleExceptions: true,
-      level: getActualLoggingLevel('INFO')
+      level: getActualLoggingLevel('info')
     }),
     new winston.transports.File({
       filename: './logs/error.log',
       handleExceptions: true,
-      level: getActualLoggingLevel('ERROR')
+      level: getActualLoggingLevel('error')
     })
   ],
   exitOnError: true,
@@ -49,7 +49,7 @@ const requestLogger = (request: IRequestWithBody): number => {
   const urlLog = `url=${path};`;
   const queryParametersLog = `${queryParameters ? ` query='${queryParameters}';` : ''}`;
   const requestBodyLog = Object.entries(requestBody).length || Array.isArray(requestBody) ? ` body=${JSON.stringify(requestBody)}` : '';
-  winstonLogger.log(LOGGING_LEVELS.NAME.INFO, `${requestDateLog} request - ${method} ${urlLog}${queryParametersLog}${requestBodyLog}`);
+  winstonLogger.log(LOGGING_LEVELS.NAME.info, `${requestDateLog} request - ${method} ${urlLog}${queryParametersLog}${requestBodyLog}`);
   return requestDate;
 };
 
@@ -59,11 +59,11 @@ const responseLogger = (response: IResponseWithBody, requestDate: number): void 
   const responseDateLog = (new Date(responseDate)).toLocaleString();
   const msLog = `[${responseDate - requestDate}ms]`;
   const responseBodyLog = Object.entries(responseBody).length || Array.isArray(responseBody) ? ` body=${JSON.stringify(responseBody)}` : '';
-  winstonLogger.log(LOGGING_LEVELS.NAME.INFO, `${responseDateLog} response - ${msLog} '${status} ${message}'${responseBodyLog}`);
+  winstonLogger.log(LOGGING_LEVELS.NAME.info, `${responseDateLog} response - ${msLog} '${status} ${message}'${responseBodyLog}`);
 };
 
 const errorLogger = (err: Error) => {
-  winstonLogger.log(LOGGING_LEVELS.NAME.ERROR, err.message);
+  winstonLogger.log(LOGGING_LEVELS.NAME.error, err.message);
 };
 
 export const logger = async (ctx: Context, next: Next) => {
