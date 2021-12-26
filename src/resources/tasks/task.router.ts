@@ -22,13 +22,9 @@ tasksRouter.get('/:boardId/tasks', async (ctx: IRouterContext<ITask[], ITask[]>)
  * Register Route to request Task entity by id
  */
 tasksRouter.get('/:boardId/tasks/:taskId', async (ctx: IRouterContext<ITask, ITask>) => {
-    try {
-        const { taskId } = ctx.params;
-        const task = await TasksService.getById(taskId);
-        ctx.body = Task.toResponse(task);
-    } catch {
-        ctx.status = StatusCodes.NOT_FOUND;
-    }
+    const { taskId } = ctx.params;
+    const task = await TasksService.getById(taskId);
+    ctx.body = Task.toResponse(task);
 });
 
 /**

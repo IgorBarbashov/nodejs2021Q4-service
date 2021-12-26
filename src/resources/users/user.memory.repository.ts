@@ -1,4 +1,5 @@
 import { REPOSITORY_ERROR_MESSAGES } from '../../constants';
+import { EntityNotFoundError, EntityExistsError } from '../../errors/customErrors';
 import { IUser, IUserBD } from './user.interfaces';
 
 class UsersRepository {
@@ -39,7 +40,7 @@ class UsersRepository {
         if (this._isItemExists(key)) {
           resolve(this.users.get(key) as IUser);
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
@@ -56,7 +57,7 @@ class UsersRepository {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.EXISTS}${key}`));
+          reject(new EntityExistsError(`${REPOSITORY_ERROR_MESSAGES.USERS.EXISTS}${key}`));
         } else {
           this.users.set(key, value);
           resolve(value);
@@ -79,7 +80,7 @@ class UsersRepository {
           this.users.set(key, value);
           resolve(value);
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
@@ -98,7 +99,7 @@ class UsersRepository {
           this.users.delete(key);
           resolve();
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`));
         }
       }, 100);
     });

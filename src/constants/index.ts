@@ -16,3 +16,7 @@ export const REPOSITORY_ERROR_MESSAGES = {
         EXISTS: 'Task already exists, id: '
     }
 };
+
+export const EVENTS = {
+    ERROR: 'error'
+}

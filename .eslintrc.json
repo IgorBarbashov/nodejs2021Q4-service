@@ -50,6 +50,7 @@
       "allowModules": [],
       "resolvePaths": ["/path/to/a/modules/directory"],
       "tryExtensions": [".js", ".ts", ".json", ".node"]
-    }]
+    }],
+    "max-classes-per-file": "off"
   }
 }

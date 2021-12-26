@@ -30,16 +30,12 @@ boardsRouter.get('/', async (ctx: IRouterContext<IBoard[], IBoardResponse[]>) =>
  * Register Route to request Board entity by id
  */
 boardsRouter.get('/:id', async (ctx: IRouterContext<IBoard, IBoardResponse>) => {
-    try {
-        const { id } = ctx.params;
-        const board = await BoardsService.getById(id);
-        const boardToResponse = Board.toResponse(board);
-        ctx.body = {
-            ...boardToResponse,
-            columns: boardToResponse.columns ? boardToResponse.columns.map(Column.toResponse) : []
-        }
-    } catch {
-        ctx.status = StatusCodes.NOT_FOUND;
+    const { id } = ctx.params;
+    const board = await BoardsService.getById(id);
+    const boardToResponse = Board.toResponse(board);
+    ctx.body = {
+        ...boardToResponse,
+        columns: boardToResponse.columns ? boardToResponse.columns.map(Column.toResponse) : []
     }
 });
 
@@ -75,11 +71,7 @@ boardsRouter.put('/:id', async (ctx: IRouterContext<IBoard, IBoardResponse>) => 
  * Register Route to delete existed Board entity
  */
 boardsRouter.delete('/:id', async (ctx) => {
-    try {
-        const { id } = ctx.params;
-        await BoardsService.delete(id);
-        ctx.status = StatusCodes.NO_CONTENT;
-    } catch {
-        ctx.status = StatusCodes.NOT_FOUND;
-    }
+    const { id } = ctx.params;
+    await BoardsService.delete(id);
+    ctx.status = StatusCodes.NO_CONTENT;
 });
