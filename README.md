@@ -92,6 +92,9 @@ Three levels of logging are supported:
 - `info`
 
 To define max logging level set variable `LOGGING_LEVEL` in the `.env` file.
+- Events with defined in `.env` logging level are logging to `Console` and file `./logs/common.log`
+- Events with level error are logging to the file `./logs/error.log` too
+- `uncaughtException` and `unhandledRejection` events are logging with level `error`
 
 
 ### Developer environment and instruments
