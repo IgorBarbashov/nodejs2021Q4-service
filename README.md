@@ -1,10 +1,23 @@
 # RS School - NodeJS Course - 2021 Q4
 
-## Task 5. REST service - Typescript basics
+## Task 6. REST service - Logging & Error Handling
+
+- [About](#about)
+- [How to install](#how-to-install)
+- [How to use application and run tests](#how-to-use-application-and-run-tests)
+- [Application operate with the following resources](#application-operate-with-the-following-resources)
+- [Details](#details)
+- [Logging](#logging)
+- [Developer environment and instruments](#developer-environment-and-instruments)
 
 ### About
 REST service application which used in-memory database and builded on Koa framework
-- [Task page - Typescript basics](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/typescript-basics.md)
+
+Technical task
+- [REST service](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/rest-service.md)
+- [Typescript basics](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/typescript-basics.md)
+- [Logging & Error Handling](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/logging-error-handling.md)
+
 
 ### How to install
 - Install Node.js 16.13.0 or higher
@@ -70,11 +83,23 @@ REST service application which used in-memory database and builded on Koa framew
 
 3. When somebody `DELETEs` `User`, all `Tasks` where `User` is assignee should be updated to put `userId = null`.
 
+### Logging
+The App implements a Logging service. Logging supports multiple logging levels and store logging level in environment variable.
+
+Three levels of logging are supported:
+- `error`
+- `warn`
+- `info`
+
+To define max logging level set variable `LOGGING_LEVEL` in the `.env` file.
+
+
 ### Developer environment and instruments
 - Node 16.13.0
 - TypeScript 4.5.2
 - Npm 8.1.0
 - Koa 2.13.4 - web framework for Node.js
+- Winston 3.3.3 - logging library
 - Jest 27.3.1
 - Supertest 6.1.6
 - ESLint 8.3.0
