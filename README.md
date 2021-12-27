@@ -22,7 +22,7 @@ Technical task
 ### How to install
 - Install Node.js 16.13.0 or higher
 - Clone this repository
-- Switch to **task-5-typescript-basics** branch
+- Switch to **task_6_logging_and_error_handling** branch
 - Install dependencies by command `npm i`
 
 ### How to use application and run tests
