@@ -1,18 +1,43 @@
 version: '3'
+
 services:
   node:
+    image: bis200705/docker-basics-compose-node
+    container_name: docker-basics-compose-node
     build: .
     ports:
       - ${PORT}:${PORT}
+    networks:
+      - docker-basics-custom-net
     depends_on:
       - postgres
+    restart: always
+    volumes:
+      - ./logs:/usr/app/logs
     environment:
-      - PORT=8080
+      PORT: ${PORT}
+
   postgres:
+    image: bis200705/docker-basics-compose-postgres
+    container_name: docker-basics-compose-postgres
     build: ./db/
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    networks:
+      - docker-basics-custom-net
+    restart: always
+    volumes:
+      - ./db:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${PASTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: ${PGDATA}
+
+networks:
+  docker-basics-custom-net:
+    driver: bridge
+
+volumes:
+  logs:
+  db:
