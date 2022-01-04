@@ -23,7 +23,7 @@ export interface IBoardFromRepository {
 }
 
 export interface IBoardResponse {
-    id: string[];
+    id: string;
     title: string;
     columns: IColumnResponse[];
 }

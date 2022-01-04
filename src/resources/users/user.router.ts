@@ -1,7 +1,8 @@
 import Router from 'koa-router';
 import { StatusCodes } from 'http-status-codes';
 import { UsersService } from './user.service';
-import { IUser, IUserResponseContext, IAllUserResponseContext } from './user.interfaces';
+import { IRouterContext } from '../common/common.interfaces';
+import { IUser, IUserResponse } from './user.interfaces';
 
 /**
  * Create Route to manage User entities
@@ -14,7 +15,7 @@ export const usersRouter = new Router({ prefix: '/users' })
 /**
  * Register Route to request collection of all User entity
  */
-usersRouter.get('/', async (ctx: IAllUserResponseContext) => {
+usersRouter.get('/', async (ctx: IRouterContext<IUser[], IUserResponse[]>) => {
     const users = await UsersService.getAll();
     ctx.body = users;
 });
@@ -22,7 +23,7 @@ usersRouter.get('/', async (ctx: IAllUserResponseContext) => {
 /**
  * Register Route to request User entity by id
  */
-usersRouter.get('/:id', async (ctx: Router.IRouterParamContext & IUserResponseContext) => {
+usersRouter.get('/:id', async (ctx: IRouterContext<IUser, IUserResponse>) => {
     const { id } = ctx.params;
     const user = await UsersService.getById(id);
     ctx.body = user;
@@ -31,7 +32,7 @@ usersRouter.get('/:id', async (ctx: Router.IRouterParamContext & IUserResponseCo
 /**
  * Register Route to create new User entity
  */
-usersRouter.post('/', async (ctx: IUserResponseContext) => {
+usersRouter.post('/', async (ctx: IRouterContext<IUser, IUserResponse>) => {
     const body = <IUser>ctx.request.body;
     const user = await UsersService.create(body);
     ctx.status = StatusCodes.CREATED;
@@ -41,7 +42,7 @@ usersRouter.post('/', async (ctx: IUserResponseContext) => {
 /**
  * Register Route to update existed User entity
  */
-usersRouter.put('/:id', async (ctx: Router.IRouterParamContext & IUserResponseContext) => {
+usersRouter.put('/:id', async (ctx: IRouterContext<IUser, IUserResponse>) => {
     const { id } = ctx.params;
     const body = <IUser>ctx.request.body;
     const user = await UsersService.update(id, body);

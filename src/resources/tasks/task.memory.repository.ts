@@ -1,4 +1,5 @@
 import { REPOSITORY_ERROR_MESSAGES } from '../../constants';
+import { EntityNotFoundError, EntityExistsError } from '../../errors/customErrors';
 import { ITask, ITaskBD } from './task.interfaces';
 
 class TasksRepository {
@@ -39,7 +40,7 @@ class TasksRepository {
         if (this._isItemExists(key)) {
           resolve(this.tasks.get(key) as ITask);
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
@@ -56,7 +57,7 @@ class TasksRepository {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.EXISTS}${key}`));
+          reject(new EntityExistsError(`${REPOSITORY_ERROR_MESSAGES.TASKS.EXISTS}${key}`));
         } else {
           this.tasks.set(key, value);
           resolve(value);
@@ -79,7 +80,7 @@ class TasksRepository {
           this.tasks.set(key, value);
           resolve(value);
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
@@ -98,7 +99,7 @@ class TasksRepository {
           this.tasks.delete(key);
           resolve();
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.TASKS.NOT_FOUND}${key}`));
         }
       }, 100);
     });

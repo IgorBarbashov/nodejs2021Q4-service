@@ -16,3 +16,28 @@ export const REPOSITORY_ERROR_MESSAGES = {
         EXISTS: 'Task already exists, id: '
     }
 };
+
+export const EVENTS = {
+    ERROR: 'error'
+}
+
+export const LOGGING_LEVELS = {
+    NAME: {
+        error: 'error',
+        warn: 'warn',
+        info: 'info',
+        debug: 'debug'
+    },
+    ORDER: {
+        error: 0,
+        warn: 1,
+        info: 2,
+        debug: 3
+    },
+    COLOR: {
+        error: 'blue',
+        warn: 'green',
+        info: 'yellow',
+        debug: 'red'
+    }
+};

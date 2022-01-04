@@ -1,4 +1,5 @@
 import { REPOSITORY_ERROR_MESSAGES } from '../../constants';
+import { EntityNotFoundError, EntityExistsError } from '../../errors/customErrors';
 import { IColumn, IColumnBD } from './column.interfaces';
 
 class ColumnsRepository {
@@ -39,7 +40,7 @@ class ColumnsRepository {
         if (this._isItemExists(key)) {
           resolve(this.columns.get(key) as IColumn);
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
@@ -56,7 +57,7 @@ class ColumnsRepository {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.EXISTS}${key}`));
+          reject(new EntityExistsError(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.EXISTS}${key}`));
         } else {
           this.columns.set(key, value);
           resolve(value);
@@ -78,7 +79,7 @@ class ColumnsRepository {
           this.columns.delete(key);
           resolve();
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.COLUMNS.NOT_FOUND}${key}`));
         }
       }, 100);
     });

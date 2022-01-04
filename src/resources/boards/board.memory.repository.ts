@@ -1,4 +1,5 @@
 import { REPOSITORY_ERROR_MESSAGES } from '../../constants';
+import { EntityNotFoundError, EntityExistsError } from '../../errors/customErrors';
 import { IBoardFromRepository, IBoardBD } from './board.interfaces';
 
 class BoardsRepository {
@@ -39,7 +40,7 @@ class BoardsRepository {
         if (this._isItemExists(key)) {
           resolve((this.boards.get(key) as IBoardFromRepository));
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
@@ -56,7 +57,7 @@ class BoardsRepository {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (this._isItemExists(key)) {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.EXISTS}${key}`));
+          reject(new EntityExistsError(`${REPOSITORY_ERROR_MESSAGES.BOARDS.EXISTS}${key}`));
         } else {
           this.boards.set(key, value);
           resolve(value);
@@ -79,7 +80,7 @@ class BoardsRepository {
           this.boards.set(key, value);
           resolve(value);
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
@@ -98,7 +99,7 @@ class BoardsRepository {
           this.boards.delete(key);
           resolve();
         } else {
-          reject(new Error(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
+          reject(new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.BOARDS.NOT_FOUND}${key}`));
         }
       }, 100);
     });
