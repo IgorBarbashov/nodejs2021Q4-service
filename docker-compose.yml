@@ -17,7 +17,7 @@ services:
       - postgres
     restart: on-failure
     volumes:
-      - ./logs:/usr/app/logs
+      - logs:/usr/app/logs
       - ./src:/usr/app/src
     environment:
       PORT: ${PORT}
@@ -32,7 +32,7 @@ services:
       - docker-basics-custom-net
     restart: always
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -46,4 +46,3 @@ networks:
 volumes:
   logs:
   db:
-  src:
