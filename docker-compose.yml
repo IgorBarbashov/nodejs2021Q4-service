@@ -15,7 +15,7 @@ services:
       - docker-basics-custom-net
     depends_on:
       - postgres
-    restart: always
+    restart: on-failure
     volumes:
       - ./logs:/usr/app/logs
       - ./src:/usr/app/src

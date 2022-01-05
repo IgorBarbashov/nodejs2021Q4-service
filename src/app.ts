@@ -10,6 +10,13 @@ import { router } from './resources';
 export const app = new Koa();
 
 /**
+ * Register Uncaught Exception and Unhandled Rejection handlers
+ * which are should be used to restart docker image
+ */
+process.on('uncaughtException', () => process.exit(1));
+process.on('unhandledRejection', () => process.exit(1));
+
+/**
  * Register bodyParser middleware
  */
 app.use(bodyParser());
@@ -18,8 +25,6 @@ app.use(bodyParser());
  * Register logger middleware
  */
 app.use(logger);
-
-// throw Error('Oops!');
 
 /**
  * Register standard Repository layer errors handler (entity not found, entity already exists e.t.c.)
