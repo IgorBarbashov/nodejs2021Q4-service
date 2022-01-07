@@ -10,11 +10,22 @@ import { router } from './resources';
 export const app = new Koa();
 
 /**
- * Register Uncaught Exception and Unhandled Rejection handlers
- * which are should be used to restart docker image
+ * Register Uncaught Exception handler which used to restart docker image
  */
-process.on('uncaughtException', () => process.exit(1));
-process.on('unhandledRejection', () => process.exit(1));
+ process.on('uncaughtException', () => {
+    setTimeout(() => {
+        process.exit(1)
+    }, 100);
+});
+
+/**
+ * Register Unhandled Rejection handler which used to restart docker image
+ */
+ process.on('unhandledRejection', () => {
+    setTimeout(() => {
+        process.exit(1)
+    }, 100);
+});
 
 /**
  * Register bodyParser middleware
