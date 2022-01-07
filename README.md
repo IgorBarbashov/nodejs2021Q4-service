@@ -3,8 +3,7 @@
 ## Task 7. REST service - Docker basics
 
 - [About](#about)
-- [How to install](#how-to-install)
-- [How to use application and run tests](#how-to-use-application-and-run-tests)
+- [How to install and use](#how-to-install-and-use)
 - [Application operate with the following resources](#application-operate-with-the-following-resources)
 - [Details](#details)
 - [Logging](#logging)
@@ -20,15 +19,21 @@ Technical task
 - [Docker basics](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/docker-basics.md)
 
 
-### How to install
-- Install [Docker](https://www.docker.com/)
-- Clone this repository
-- Switch to **task_7_docker_basics** branch
-
-### How to use application and run tests
-- Command string for start REST service in Docker image: `docker-compose up`
+### How to install and use
+- Using Docker Compose
+  1. Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/)
+  2. Clone this repository
+  3. Switch to **task_7_docker_basics** branch
+  4. Command string for start REST service in Docker: `docker-compose up`
+  5. Command string for tests (start app in docker image first): `docker container exec docker-basics-app npm run test`
+- Local (without Docker)
+  1. Install [Node.js 16.13.0](https://nodejs.org/en/) or higher
+  2. Clone this repository
+  3. Switch to **task_7_docker_basics** branch
+  4. Install dependencies by command `npm i`
+  5. Command string for start REST service: `npm run start`
+  6. Command string for tests: `npm run test`
 - Application starts on port 4000 by default
-- Command string for tests (started app in docker image is needed): `docker container exec docker-basics-app npm run test`
 - After starting the app you can open in your browser OpenAPI documentation by typing `http://localhost:4000/doc/`
 
 ### Application operate with the following resources
@@ -99,10 +104,10 @@ To define max logging level set variable `LOGGING_LEVEL` in the `.env` file.
 
 
 ### Developer environment and instruments
-- Docker
 - Node 16.13.0
-- TypeScript 4.5.2
 - Npm 8.1.0
+- Docker
+- TypeScript 4.5.2
 - Koa 2.13.4 - web framework for Node.js
 - Winston 3.3.3 - logging library
 - Jest 27.3.1
