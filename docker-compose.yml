@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: bis200705/docker-basics-app
+    image: docker-basics-app
     container_name: docker-basics-app
     build:
       context: .
@@ -23,7 +23,7 @@ services:
       PORT: ${PORT}
 
   postgres:
-    image: bis200705/docker-basics-postgres
+    image: docker-basics-postgres
     container_name: docker-basics-postgres
     build: ./db/
     ports:
