@@ -19,21 +19,18 @@ const getActualLoggingLevel = (level: allLevels) =>
   LOGGING_LEVELS.ORDER[level] < LOGGING_LEVELS.ORDER[globalLoggingLevel as allLevels] ? level : globalLoggingLevel;
   
 
-const winstonLogger = winston.createLogger({
+export const winstonLogger = winston.createLogger({
   transports: [
     new winston.transports.Console({
       format: winston.format.simple(),
-      handleExceptions: true,
       level: getActualLoggingLevel('info')
     }),
     new winston.transports.File({
       filename: './logs/common.log',
-      handleExceptions: true,
       level: getActualLoggingLevel('info')
     }),
     new winston.transports.File({
       filename: './logs/error.log',
-      handleExceptions: true,
       level: getActualLoggingLevel('error')
     })
   ],
