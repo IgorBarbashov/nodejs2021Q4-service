@@ -1,6 +1,6 @@
 # RS School - NodeJS Course - 2021 Q4
 
-## Task 7. REST service - Docker basics
+## Task 8. REST service - PostgreSQL & Typeorm
 
 - [About](#about)
 - [How to install and use](#how-to-install-and-use)
@@ -10,13 +10,14 @@
 - [Developer environment and instruments](#developer-environment-and-instruments)
 
 ### About
-REST service application which used in-memory database, builded on Koa framework and containerized by Docker
+REST service application which used PostgreSQL database with TypeORM library, builded on Koa framework and containerized by Docker
 
 Technical task
 - [REST service](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/rest-service.md)
 - [Typescript basics](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/typescript-basics.md)
 - [Logging & Error Handling](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/logging-error-handling.md)
 - [Docker basics](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/docker-basics.md)
+- [PostgreSQL & Typeorm](https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/postgresql-typeorm.md)
 
 
 ### How to install and use
