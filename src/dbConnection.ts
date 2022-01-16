@@ -1,12 +1,12 @@
 import { createConnection } from 'typeorm';
-import { connectionConfig }  from './common/ormconfig';
+import connectionConfig  from './common/ormconfig';
 import { winstonLogger } from './logger';
 import { LOGGING_LEVELS } from './constants/index';
 
 /**
- * Establishes a connection to DB
+ * Set a connection to DB
  * 
- * @throws Error if connection can't be established
+ * @throws Error if connection can't be setted
  * 
  */
 export const dbConnection = async (): Promise<void> => {

@@ -1,13 +1,18 @@
+import { Entity, PrimaryGeneratedColumn, Column as ColumnDecorator } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { IColumn, IColumnRepository, IColumnResponse } from './column.interfaces';
 
+@Entity({ name: 'columns' })
 export class Column implements IColumn {
-  id;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  title;
+  @ColumnDecorator('varchar', { length: 255, default: 'COLUMN' })
+  title: string;
 
-  order;
-  
+  @ColumnDecorator('integer', { default: 0 })
+  order: number;
+
   /**
    * Initialize Column entity fields and generate id for entity in uuid format
    * 
@@ -16,7 +21,7 @@ export class Column implements IColumn {
   constructor({
     title = 'COLUMN',
     order = 0
-  }: IColumnRepository) {
+  } = {}) {
     this.id = uuidv4();
     this.title = title;
     this.order = order;

@@ -1,34 +1,38 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { ITask, ITaskRepository } from './task.interfaces';
 
+@Entity({ name: 'tasks' })
 export class Task implements ITask {
-    id;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-    title;
+    @Column('varchar', { length: 255, default: 'TASK' })
+    title: string;
 
-    order;
+    @Column('integer', { default: 0 })
+    order: number;
 
-    description;
+    @Column('varchar', { length: 255, default: 'Default task' })
+    description: string;
 
-    userId;
+    @Column('varchar', { length: 36, default: null, nullable: true })
+    userId: string | null;
 
-    boardId;
+    @Column('varchar', { length: 36, default: null, nullable: true })
+    boardId: string | null;
 
-    columnId;
+    @Column('varchar', { length: 36, default: null, nullable: true })
+    columnId: string | null;
 
   /**
    * Initialize Task entity fields and generate id for entity in uuid format
    * 
    * @param Object - Initial object accorded interface ITaskRepository
    */
-  constructor({
-    title = 'TASK',
-    order = 0,
-    description = 'Default task',
-    userId = null,
-    boardId = null,
-    columnId = null
-  }: ITaskRepository) {
+  constructor({ title = 'TASK', order = 0, description = 'Default task', userId = null, boardId = null, columnId = null }: ITaskRepository =
+    { title: 'TASK', order: 0, description: 'Default task', userId: null, boardId: null, columnId: null}
+  ) {
     this.id = uuidv4();
     this.title = title;
     this.order = order;

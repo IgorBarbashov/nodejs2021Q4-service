@@ -1,14 +1,20 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { IUser, IUserRepository, IUserResponse } from './user.interfaces';
 
+@Entity({ name: 'users' })
 export class User implements IUser {
-  id;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  name;
+  @Column('varchar', { length: 255, default: 'USER' })
+  name: string;
 
-  login;
+  @Column('varchar', { length: 255, default: 'user' })
+  login: string;
 
-  password;
+  @Column('varchar', { length: 255, default: 'P@55w0rd', select: false })
+  password: string;
 
   /**
    * Initialize User entity fields and generate id for entity in uuid format
@@ -19,7 +25,7 @@ export class User implements IUser {
     name = 'USER',
     login = 'user',
     password = 'P@55w0rd'
-  }: IUserRepository) {
+  } = {}) {
     this.id = uuidv4();
     this.name = name;
     this.login = login;

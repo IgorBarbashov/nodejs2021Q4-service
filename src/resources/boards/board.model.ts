@@ -1,22 +1,25 @@
+import { Entity, PrimaryGeneratedColumn, Column as ColumnDecorator } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { IBoard, IBoardWithoutId } from './board.interfaces';
+import { IColumn } from '../columns/column.interfaces';
 
+@Entity({ name: 'boards' })
 export class Board implements IBoard {
-  id;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  title;
+  @ColumnDecorator('varchar', { length: 255, default: 'BOARD' })
+  title: string; 
 
-  columns;
+  @ColumnDecorator('simple-array')
+  columns: IColumn[];
 
   /**
    * Initialize Board entity fields and generate id for entity in uuid format
    * 
    * @param Object - Initial object accorded interface IBoardWithoutId
    */
-  constructor({
-    title = 'BOARD',
-    columns = []
-  }: IBoardWithoutId) {
+  constructor({ title = 'BOARD', columns = [] }: IBoardWithoutId = { title: 'BOARD', columns: [] }) {
     this.id = uuidv4();
     this.title = title;
     this.columns = columns;
