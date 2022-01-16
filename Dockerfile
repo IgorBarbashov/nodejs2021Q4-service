@@ -3,6 +3,6 @@ ARG PORT
 EXPOSE ${PORT}
 WORKDIR /usr/app
 COPY package.json package-lock.json ./
-RUN npm install --no-optional
+RUN npm install && npm cache clean --force
 COPY . .
 CMD ["npm", "start"]
