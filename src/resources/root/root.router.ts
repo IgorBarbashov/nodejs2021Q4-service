@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { usersRepository } from '../users/user.memory.repository';
+import { getAllUsers } from '../users/user.repository';
 import { boardsRepository } from '../boards/board.memory.repository';
 import { columnsRepository } from '../columns/column.memory.repository';
 import { tasksRepository } from '../tasks/task.memory.repository';
@@ -27,12 +27,12 @@ rootRouter.get('/', async (ctx) => {
  */
 rootRouter.get('/db', async (ctx) => {
     const mapToObj = (map: EntityBd) => [...map.entries()].reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-    const users = await usersRepository.getAll();
+    const users = await getAllUsers();
     const boards = await boardsRepository.getAll();
     const columns = await columnsRepository.getAll();
     const tasks = await tasksRepository.getAll();
     const state = {
-        users: mapToObj(users),
+        users,
         boards: mapToObj(boards),
         columns: mapToObj(columns),
         tasks: mapToObj(tasks)
