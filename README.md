@@ -24,13 +24,13 @@ Technical task
 - Using Docker Compose
   1. Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/)
   2. Clone this repository
-  3. Switch to **task_7_docker_basics** branch
+  3. Switch to **task_8_postgresql_typeorm** branch
   4. Command string for start REST service in Docker: `docker-compose up`
   5. Command string for tests (start app in docker image first): `docker container exec docker-basics-app npm run test`
 - Local (without Docker)
   1. Install [Node.js 16.13.0](https://nodejs.org/en/) or higher
   2. Clone this repository
-  3. Switch to **task_7_docker_basics** branch
+  3. Switch to **task_8_postgresql_typeorm** branch
   4. Install dependencies by command `npm i`
   5. Command string for start REST service: `npm run start`
   6. Command string for tests: `npm run test`
@@ -106,12 +106,14 @@ To define max logging level set variable `LOGGING_LEVEL` in the `.env` file.
 
 ### Developer environment and instruments
 - Node 16.13.0
-- Npm 8.1.0
-- Docker
 - TypeScript 4.5.2
 - Koa 2.13.4 - web framework for Node.js
-- Winston 3.3.3 - logging library
+- PostgreSQL DB
+- TypeORM
+- Docker
 - Jest 27.3.1
 - Supertest 6.1.6
+- Winston 3.3.3 - logging library
 - ESLint 8.3.0
 - TSDoc 0.0.4
+- Npm 8.1.0
