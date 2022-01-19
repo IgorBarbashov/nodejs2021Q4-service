@@ -17,6 +17,7 @@ export class Task implements ITask {
     description: string;
 
     @Column('varchar', { length: 36, default: null, nullable: true })
+    // @ManyToOne(() => User, user => user.tasks)
     userId: string | null;
 
     @Column('varchar', { length: 36, default: null, nullable: true })

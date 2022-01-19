@@ -1,5 +1,6 @@
 import { User } from './user.model';
 import { getAllUsers, getUserById, addUser, updateUser, deleteUser } from './user.repository';
+import { TasksService } from '../tasks/tasks.service';
 import { IUser, IUserResponse } from './user.interfaces';
 
 export class UsersService {
@@ -59,5 +60,6 @@ export class UsersService {
      */
     static async delete(id: string): Promise<void> {
         await deleteUser(id);
+        await TasksService.unassignUser(id);
     }
 };

@@ -1,5 +1,5 @@
 import { Column } from './column.model';
-import { columnsRepository } from './column.memory.repository';
+import { getAllColumns, getColumnById, addColumn, deleteColumn } from './column.repository';
 import { IColumn } from './column.interfaces';
 
 export class ColumnsService {
@@ -9,7 +9,7 @@ export class ColumnsService {
      * @returns Promise that will resolve with Collection of all Column entities or rejected if error was occurred
      */    
     static async getAll(): Promise<IColumn[]> {
-        const columns = [ ...(await columnsRepository.getAll()).values() ];
+        const columns = await getAllColumns();
         return columns;
     }
 
@@ -20,7 +20,7 @@ export class ColumnsService {
      * @returns Promise that will resolve with requested Column entity or rejected if error was occurred
      */
     static async getById(id: string): Promise<IColumn> {
-        const column = await columnsRepository.getById(id);
+        const column = await getColumnById(id);
         return column;
     }
 
@@ -33,7 +33,7 @@ export class ColumnsService {
     static async create(body: IColumn): Promise<IColumn> {
         const bodyToRepository = Column.toRepository(body);
         const column = new Column(bodyToRepository);
-        const addedColumn = await columnsRepository.add(column.id, column);
+        const addedColumn = await addColumn(column.id, column);
         return addedColumn;
     };
 
@@ -44,6 +44,6 @@ export class ColumnsService {
      * @returns Promise that will resolve if entity was deleted
      */
     static async delete(id: string): Promise<void> {
-        await columnsRepository.delete(id);
+        await deleteColumn(id);
     }
 };

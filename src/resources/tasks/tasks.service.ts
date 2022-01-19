@@ -1,5 +1,5 @@
 import { Task } from './task.model';
-import { tasksRepository } from './task.memory.repository';
+import { getAllTasks, getTaskById, addTask, updateTask, deleteTask, unassignUserFromTask } from './task.repository';
 import { ITask } from './task.interfaces';
 
 export class TasksService {
@@ -9,7 +9,7 @@ export class TasksService {
      * @returns Promise that will resolve with Collection of all Task entities or rejected if error was occurred
      */
     static async getAll(): Promise<ITask[]> {
-        const tasks = [ ...(await tasksRepository.getAll()).values() ];
+        const tasks = await getAllTasks();
         return tasks;
     }
 
@@ -20,7 +20,7 @@ export class TasksService {
      * @returns Promise that will resolve with requested Task entity or rejected if error was occurred
      */
     static async getById(id: string): Promise<ITask> {
-        const task = await tasksRepository.getById(id);
+        const task = await getTaskById(id);
         return task;
     }
 
@@ -33,7 +33,7 @@ export class TasksService {
     static async create(boardId: string, body: ITask): Promise<ITask> {
         const bodyToRepository = Task.toRepository(body);
         const task = new Task({ ...bodyToRepository, boardId });
-        const addedTask = await tasksRepository.add(task.id, task);
+        const addedTask = await addTask(task.id, task);
         return addedTask;
     };
 
@@ -47,7 +47,7 @@ export class TasksService {
     static async update(id: string, body: ITask): Promise<ITask> {
         const bodyToRepository = Task.toRepository(body);
         const task = { ...bodyToRepository, id };
-        const updatedTask = await tasksRepository.update(id, task);
+        const updatedTask = await updateTask(id, task);
         return updatedTask;
     }
 
@@ -58,7 +58,7 @@ export class TasksService {
      * @returns Promise that will resolve if entity was deleted or rejected if error was occurred
      */
     static async delete(id: string): Promise<void> {
-        await tasksRepository.delete(id);
+        await deleteTask(id);
     }
 
     /**
@@ -68,6 +68,6 @@ export class TasksService {
      * @returns Promise that will resolve or rejected if error was occurred
      */
     static async unassignUser(userId: string): Promise<void> {
-        await tasksRepository.unassignUser(userId);
+        await unassignUserFromTask(userId);
     }
 };

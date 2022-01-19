@@ -11,7 +11,7 @@ import { User } from './user.model';
  */
 export const getAllUsers = async(): Promise<IUser[]> => {
   const userRepository = getRepository(User);
-  return await userRepository.find()
+  return await userRepository.find();
 };
 
 /**
@@ -57,7 +57,7 @@ export const updateUser = async (key: string, value: IUser): Promise<IUser> => {
   const userRepository = getRepository(User);
   const userForUpdate = await userRepository.findOne(key);
   if (!userForUpdate) {
-    throw new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`)
+    throw new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`);
   }
   await userRepository.update(key, value);
   return await userRepository.findOne(key) as IUser;
@@ -73,6 +73,6 @@ export const deleteUser = async (key: string): Promise<void> => {
   const userRepository = getRepository(User);
   const { affected } = await userRepository.delete(key);
   if (!affected) {
-    throw new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`)
+    throw new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`);
   }
 };

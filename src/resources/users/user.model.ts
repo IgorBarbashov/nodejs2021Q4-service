@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
+import { ITask } from '../tasks/task.interfaces';
 import { IUser, IUserRepository, IUserResponse } from './user.interfaces';
 
 @Entity({ name: 'users' })
@@ -16,20 +17,23 @@ export class User implements IUser {
   @Column('varchar', { length: 255, default: 'P@55w0rd', select: false })
   password: string;
 
+  // @Column('simple-array', { default: null, nullable: true, select: false })
+  // @OneToMany(() => Task, task => task.userId)
+  tasks?: ITask[] | null;
+
   /**
    * Initialize User entity fields and generate id for entity in uuid format
    * 
    * @param Object - Initial object accorded interface IUserRepository
    */
-  constructor({
-    name = 'USER',
-    login = 'user',
-    password = 'P@55w0rd'
-  } = {}) {
+  constructor({ name = 'USER', login = 'user', password = 'P@55w0rd', tasks = null }: Omit<IUser, 'id'> =
+    { name: 'USER', login: 'user', password: 'P@55w0rd', tasks: null })
+  {
     this.id = uuidv4();
     this.name = name;
     this.login = login;
     this.password = password;
+    this.tasks = tasks;
   }
 
   /**
@@ -39,8 +43,8 @@ export class User implements IUser {
    * @returns User entity object without changes
    */
   static toResponse(user: IUser): IUserResponse {
-    const { id, name, login } = user;
-    return { id, name, login };
+    const { id, name, login, tasks } = user;
+    return { id, name, login, tasks };
   }
 
   /**
@@ -50,7 +54,7 @@ export class User implements IUser {
    * @returns User entity object without id field
    */
   static toRepository(user: IUser): IUserRepository {
-    const { name, login, password } = user;
-    return { name, login, password };
+    const { name, login, password, tasks } = user;
+    return { name, login, password, tasks };
   }
 }

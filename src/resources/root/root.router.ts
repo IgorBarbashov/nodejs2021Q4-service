@@ -1,14 +1,8 @@
 import Router from 'koa-router';
 import { getAllUsers } from '../users/user.repository';
-import { boardsRepository } from '../boards/board.memory.repository';
-import { columnsRepository } from '../columns/column.memory.repository';
-import { tasksRepository } from '../tasks/task.memory.repository';
-import { IUserBD } from '../users/user.interfaces';
-import { IBoardBD } from '../boards/board.interfaces';
-import { IColumnBD } from '../columns/column.interfaces';
-import { ITaskBD } from '../tasks/task.interfaces';
-
-type EntityBd = IUserBD | IBoardBD | IColumnBD | ITaskBD;
+import { getAllBoards } from '../boards/board.repository';
+import { getAllColumns } from '../columns/column.repository';
+import { getAllTasks } from '../tasks/task.repository';
 
 /**
  * Create root Route
@@ -26,16 +20,10 @@ rootRouter.get('/', async (ctx) => {
  * Register Route to watch all DB
  */
 rootRouter.get('/db', async (ctx) => {
-    const mapToObj = (map: EntityBd) => [...map.entries()].reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-    const users = await getAllUsers();
-    const boards = await boardsRepository.getAll();
-    const columns = await columnsRepository.getAll();
-    const tasks = await tasksRepository.getAll();
-    const state = {
-        users,
-        boards: mapToObj(boards),
-        columns: mapToObj(columns),
-        tasks: mapToObj(tasks)
-    };
-    ctx.body = state;
+    const usersPromise = getAllUsers();
+    const boardsPromise = getAllBoards();
+    const columnsPromise = getAllColumns();
+    const tasksPromise = getAllTasks();
+    const [ users, boards, columns, tasks ] = await Promise.all([usersPromise, boardsPromise, columnsPromise, tasksPromise]);
+    ctx.body = { users, boards, columns, tasks };
 });
