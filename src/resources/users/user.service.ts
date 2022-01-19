@@ -2,6 +2,7 @@ import { User } from './user.model';
 import { getAllUsers, getUserById, addUser, updateUser, deleteUser } from './user.repository';
 import { TasksService } from '../tasks/tasks.service';
 import { IUser, IUserResponse } from './user.interfaces';
+import { ITask } from '../tasks/task.interfaces';
 
 export class UsersService {
     /**
@@ -60,6 +61,15 @@ export class UsersService {
      */
     static async delete(id: string): Promise<void> {
         await deleteUser(id);
-        await TasksService.unassignUser(id);
+        // await TasksService.unassignUser(id);
+        
+        const tasks = await TasksService.getAll();
+        const tasksPromises: Promise<ITask>[] = [];
+        tasks.forEach(task => {
+            if (task.userId === id) {
+                tasksPromises.push(TasksService.update(task.id, { ...task, userId: null }));
+            }
+        });
+        await Promise.all(tasksPromises);
     }
 };
