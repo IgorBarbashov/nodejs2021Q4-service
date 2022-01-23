@@ -1,3 +1,4 @@
+import bcryptjs from 'bcryptjs';
 import { User } from './user.model';
 import { getAllUsers, getUserById, addUser, updateUser, deleteUser, getUserByLogin } from './user.repository';
 import { TasksService } from '../tasks/tasks.service';
@@ -50,7 +51,7 @@ export class UsersService {
      */
     static async update(id: string, body: IUser): Promise<IUserResponse> {
         const bodyToRepository = User.toRepository(body);
-        const user = { ...bodyToRepository, id };
+        const user = { ...bodyToRepository, id, password: bcryptjs.hashSync(bodyToRepository.password) };
         const updatedUser = await updateUser(id, user);
         return User.toResponse(updatedUser);
     }
