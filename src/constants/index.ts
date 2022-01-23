@@ -18,6 +18,12 @@ export const REPOSITORY_ERROR_MESSAGES = {
     },
     LOGIN: {
         PASSWORD_INVALID: 'Invalid password'
+    },
+    AUTH: {
+        UNAUTHORIZED: 'Unauthorized',
+        INVALID_HEADER: 'Invalid authorization header',
+        INVALID_SCHEME: 'Invalid authorization scheme',
+        INVALID_TOKEN: 'Invalid token'
     }
 };
 

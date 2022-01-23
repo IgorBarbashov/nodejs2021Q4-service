@@ -1,5 +1,5 @@
 import bcryptjs from 'bcryptjs';
-import jsonwebtoken from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { JWT_SECRET_KEY } from '../../common/config';
 import { UsersService } from '../users/user.service';
 import { ILogin } from './login.interfaces';
@@ -15,7 +15,7 @@ export class LoginService {
             if (!isPasswordValid) {
                 throw new ForbiddenError(`${REPOSITORY_ERROR_MESSAGES.LOGIN.PASSWORD_INVALID}`);
             }
-            return jsonwebtoken.sign({ id, login }, JWT_SECRET_KEY);
+            return jwt.sign({ userId: id, login }, JWT_SECRET_KEY);
         } catch (err) {
             if (err instanceof EntityNotFoundError) {
                 throw new ForbiddenError(err.message);

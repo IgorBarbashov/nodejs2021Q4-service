@@ -1,6 +1,9 @@
 import { Context, Next } from 'koa';
 import { StatusCodes } from 'http-status-codes';
-import { EntityNotFoundError, EntityExistsError, ForbiddenError } from './customErrors';
+import {
+    EntityNotFoundError, EntityExistsError,
+    ForbiddenError, UnauthorizedError
+} from './customErrors';
  
 export const customErrorHandler = async (ctx: Context, next: Next): Promise<void> => {
     try {
@@ -15,6 +18,9 @@ export const customErrorHandler = async (ctx: Context, next: Next): Promise<void
         } else if (err instanceof ForbiddenError) {
             ctx.body = err.message;
             ctx.status = StatusCodes.FORBIDDEN;
+        } else if (err instanceof UnauthorizedError) {
+            ctx.body = err.message;
+            ctx.status = StatusCodes.UNAUTHORIZED;
         } else {
             throw err;
         }
