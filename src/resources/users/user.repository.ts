@@ -76,3 +76,16 @@ export const deleteUser = async (key: string): Promise<void> => {
     throw new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`);
   }
 };
+
+/**
+ * Check if User entity with requested login is exists in DB
+ * 
+ * @param login - Login of requested User entity
+ * @returns  Promise that will resolve with True if user with requested login is exists in DB, False - if not
+ */
+
+ export const isUserLoginExists = async (login: string): Promise<boolean> => {
+  const userRepository = getRepository(User);
+  const user = await userRepository.findOne({ where: { login } });
+  return !!user;
+};

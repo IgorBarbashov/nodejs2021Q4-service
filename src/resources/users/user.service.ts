@@ -1,8 +1,9 @@
 import { User } from './user.model';
-import { getAllUsers, getUserById, addUser, updateUser, deleteUser } from './user.repository';
+import { getAllUsers, getUserById, addUser, updateUser, deleteUser, isUserLoginExists } from './user.repository';
 import { TasksService } from '../tasks/tasks.service';
 import { IUser, IUserResponse } from './user.interfaces';
 import { ITask } from '../tasks/task.interfaces';
+import { DEFAULT_USER_LOGIN, DEFAULT_USER_PASSWORD } from '../../constants';
 
 export class UsersService {
     /**
@@ -72,4 +73,19 @@ export class UsersService {
         });
         await Promise.all(tasksPromises);
     }
+
+    /**
+     * Send to Repository layer request to create default User entity if it not exists yet
+     */
+    static async createDefaultUser(): Promise<void> {
+        const isDefaultUserExists = await isUserLoginExists(DEFAULT_USER_LOGIN);
+        if (!isDefaultUserExists) {
+            const defaultUser = new User({
+                name: DEFAULT_USER_LOGIN,
+                login: DEFAULT_USER_LOGIN,
+                password: DEFAULT_USER_PASSWORD
+            });
+            await addUser(defaultUser.id, defaultUser);
+        }
+    };
 };
