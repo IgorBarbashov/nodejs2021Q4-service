@@ -4,5 +4,5 @@ export interface ILogin {
 }
 
 export interface ILoginResponse {
-    token: string; // TODO - typing jwt
+    token: string;
 }

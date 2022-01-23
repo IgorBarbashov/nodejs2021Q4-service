@@ -13,6 +13,6 @@ export const loginRouter = new Router({ prefix: '/login' })
  */
  loginRouter.post('/', async (ctx: IRouterContext<ILogin[], ILoginResponse>) => {
     const body = <ILogin>ctx.request.body;
-    const jwtToken = await LoginService.authorizeUser(body);
-    ctx.body = { token: jwtToken };
+    const token = await LoginService.authorizeUser(body);
+    ctx.body = { token };
 });
