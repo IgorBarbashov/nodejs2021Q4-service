@@ -1,9 +1,10 @@
 import { User } from './user.model';
-import { getAllUsers, getUserById, addUser, updateUser, deleteUser, isUserLoginExists } from './user.repository';
+import { getAllUsers, getUserById, addUser, updateUser, deleteUser, getUserByLogin } from './user.repository';
 import { TasksService } from '../tasks/tasks.service';
 import { IUser, IUserResponse } from './user.interfaces';
 import { ITask } from '../tasks/task.interfaces';
-import { DEFAULT_USER_LOGIN, DEFAULT_USER_PASSWORD } from '../../constants';
+import { DEFAULT_USER_LOGIN, DEFAULT_USER_PASSWORD, REPOSITORY_ERROR_MESSAGES } from '../../constants';
+import { EntityNotFoundError } from '../../errors/customErrors';
 
 export class UsersService {
     /**
@@ -78,8 +79,8 @@ export class UsersService {
      * Send to Repository layer request to create default User entity if it not exists yet
      */
     static async createDefaultUser(): Promise<void> {
-        const isDefaultUserExists = await isUserLoginExists(DEFAULT_USER_LOGIN);
-        if (!isDefaultUserExists) {
+        const defaultUserExists = await getUserByLogin(DEFAULT_USER_LOGIN);
+        if (!defaultUserExists) {
             const defaultUser = new User({
                 name: DEFAULT_USER_LOGIN,
                 login: DEFAULT_USER_LOGIN,
@@ -88,4 +89,18 @@ export class UsersService {
             await addUser(defaultUser.id, defaultUser);
         }
     };
+
+    /**
+     * Send to Repository layer request to get User entity by login
+     * 
+     * @param login - Login of requested entity
+     * @returns Promise that will resolve with requested User entity or rejected if error was occurred
+     */
+    static async getFullDataByLogin(login: string): Promise<IUser> {
+        const user = await getUserByLogin(login);
+        if (!user) {
+            throw new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND_BY_LOGIN}${login}`);
+        }
+        return user;
+    }
 };

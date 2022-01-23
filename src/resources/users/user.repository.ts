@@ -78,14 +78,13 @@ export const deleteUser = async (key: string): Promise<void> => {
 };
 
 /**
- * Check if User entity with requested login is exists in DB
+ * Read from DB User entity with requested login
  * 
  * @param login - Login of requested User entity
- * @returns  Promise that will resolve with True if user with requested login is exists in DB, False - if not
+ * @returns Promise that will resolve with requested User entity or undefined if entity wasn't found
  */
-
- export const isUserLoginExists = async (login: string): Promise<boolean> => {
+export const getUserByLogin = async (login: string): Promise<IUser | undefined> => {
   const userRepository = getRepository(User);
   const user = await userRepository.findOne({ where: { login } });
-  return !!user;
+  return user;
 };

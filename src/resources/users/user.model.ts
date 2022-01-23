@@ -15,7 +15,7 @@ export class User implements IUser {
   @Column('varchar', { length: 255, default: 'user' })
   login: string;
 
-  @Column('varchar', { length: 255, default: 'P@55w0rd', select: false })
+  @Column('varchar', { length: 255, default: 'P@55w0rd' })
   password: string;
 
   // @Column('simple-array', { default: null, nullable: true, select: false })

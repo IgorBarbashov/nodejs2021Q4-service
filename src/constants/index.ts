@@ -15,6 +15,9 @@ export const REPOSITORY_ERROR_MESSAGES = {
     TASKS: {
         NOT_FOUND: 'Task not found, id: ',
         EXISTS: 'Task already exists, id: '
+    },
+    LOGIN: {
+        PASSWORD_INVALID: 'Invalid password'
     }
 };
 
