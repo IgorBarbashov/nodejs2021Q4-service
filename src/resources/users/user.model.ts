@@ -54,7 +54,7 @@ export class User implements IUser {
    * @returns User entity object without id field
    */
   static toRepository(user: IUser): IUserRepository {
-    const { name, login, password, tasks } = user;
-    return { name, login, password, tasks };
+    const { name, login, password } = user;
+    return { name, login, password };
   }
 }
