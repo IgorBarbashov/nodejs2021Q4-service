@@ -27,14 +27,7 @@ Technical task
   2. Clone this repository
   3. Switch to **task_9_authentication_and_jwt** branch
   4. Command string for start REST service in Docker: `docker-compose up`
-  5. Command string for tests (start app in docker image first): `docker container exec docker-basics-app npm run test`
-- Local (without Docker)
-  1. Install [Node.js 16.13.0](https://nodejs.org/en/) or higher
-  2. Clone this repository
-  3. Switch to **task_9_authentication_and_jwt** branch
-  4. Install dependencies by command `npm i`
-  5. Command string for start REST service: `npm run start`
-  6. Command string for tests: `npm run test`
+  5. Command string for tests (start app in docker image first): `docker container exec docker-basics-app npm run test:auth`
 - Application starts on port 4000 by default
 - After starting the app you can open in your browser OpenAPI documentation by typing `http://localhost:4000/doc/`
 
@@ -107,6 +100,7 @@ To define max logging level set variable `LOGGING_LEVEL` in the `.env` file.
 
 ### Developer environment and instruments
 - Node 16.13.0
+- JWT Authorization
 - TypeScript 4.5.2
 - Koa 2.13.4 - web framework for Node.js
 - PostgreSQL DB
