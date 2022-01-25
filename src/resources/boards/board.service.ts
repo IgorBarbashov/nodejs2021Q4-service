@@ -1,5 +1,5 @@
 import { Board } from './board.model';
-import { boardsRepository } from './board.memory.repository';
+import { getAllBoards, getBoardById, addBoard, updateBoard, deleteBoard } from './board.repository';
 import { ColumnsService } from '../columns/column.service';
 import { TasksService } from '../tasks/tasks.service';
 import { IBoard } from './board.interfaces';
@@ -24,9 +24,9 @@ export class BoardsService {
      * @returns Promise that will resolve with Collection of all Board entities or rejected if error was occurred
      */
     static async getAll(): Promise<IBoard[]> {
-        const boards = [ ...(await boardsRepository.getAll()).values() ];
+        const boards = await getAllBoards();
         const boardsPromises = boards.map(async board => {
-            const columns = board.columns ? await this._columnsIdToObject(board.columns) : [];
+            const columns = board.columns ? await this._columnsIdToObject(board.columns as unknown as string[]) : [];
             return { ...board, columns };
         });
         const mappedBoards = await Promise.all(boardsPromises);
@@ -40,8 +40,8 @@ export class BoardsService {
      * @returns Promise that will resolve with requested Board entity or rejected if error was occurred
      */
     static async getById(id: string): Promise<IBoard> {
-        const board = await boardsRepository.getById(id);
-        const columns = board.columns ? await this._columnsIdToObject(board.columns) : [];
+        const board = await getBoardById(id);
+        const columns = board.columns ? await this._columnsIdToObject(board.columns as unknown as string[]) : [];
         return { ...board, columns };
     }
 
@@ -60,7 +60,7 @@ export class BoardsService {
         const board = new Board({ ...bodyToRepository, columns });
         const mappedColumns = columns.map(el => el.id);
 
-        const addedBoard = await boardsRepository.add(board.id, { ...board, columns: mappedColumns });
+        const addedBoard = await addBoard(board.id, { ...board, columns: mappedColumns as unknown[] as IColumn[] });
         return { ...addedBoard, columns };
     };
 
@@ -78,7 +78,7 @@ export class BoardsService {
             : [];
         const columns = await Promise.all(columnsPromises);
         const mappedColumns = columns.map(el => el.id);
-        await boardsRepository.update(id, { ...bodyToRepository, id, columns: mappedColumns });
+        await updateBoard(id, { ...bodyToRepository, id, columns: mappedColumns as unknown[] as IColumn[] });
         return { ...bodyToRepository, id, columns };
     }
 
@@ -89,7 +89,7 @@ export class BoardsService {
      * @returns Promise that will resolve if entity was deleted or rejected if error was occurred
      */
     static async delete(id: string): Promise<void> {
-        await boardsRepository.delete(id);
+        await deleteBoard(id);
         const tasks = await TasksService.getAll();
         const tasksPromises: Promise<void>[] = [];
         tasks.forEach(task => {

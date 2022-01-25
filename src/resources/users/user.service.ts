@@ -1,7 +1,8 @@
 import { User } from './user.model';
-import { usersRepository } from './user.memory.repository';
+import { getAllUsers, getUserById, addUser, updateUser, deleteUser } from './user.repository';
 import { TasksService } from '../tasks/tasks.service';
 import { IUser, IUserResponse } from './user.interfaces';
+import { ITask } from '../tasks/task.interfaces';
 
 export class UsersService {
     /**
@@ -10,7 +11,7 @@ export class UsersService {
      * @returns Promise that will resolve with Collection of all User entities or rejected if error was occurred
      */
     static async getAll(): Promise<IUserResponse[]> {
-        const users = [ ...(await usersRepository.getAll()).values() ];
+        const users = await getAllUsers();
         return users.map(User.toResponse);
     }
 
@@ -21,7 +22,7 @@ export class UsersService {
      * @returns Promise that will resolve with requested User entity or rejected if error was occurred
      */
     static async getById(id: string): Promise<IUserResponse> {
-        const user = await usersRepository.getById(id);
+        const user = await getUserById(id);
         return User.toResponse(user);
     }
 
@@ -34,7 +35,7 @@ export class UsersService {
     static async create(body: IUser): Promise<IUserResponse> {
         const bodyToRepository = User.toRepository(body);
         const user = new User(bodyToRepository);
-        const addedUser = await usersRepository.add(user.id, user);
+        const addedUser = await addUser(user.id, user);
         return User.toResponse(addedUser);
     };
 
@@ -48,7 +49,7 @@ export class UsersService {
     static async update(id: string, body: IUser): Promise<IUserResponse> {
         const bodyToRepository = User.toRepository(body);
         const user = { ...bodyToRepository, id };
-        const updatedUser = await usersRepository.update(id, user);
+        const updatedUser = await updateUser(id, user);
         return User.toResponse(updatedUser);
     }
 
@@ -59,7 +60,16 @@ export class UsersService {
      * @returns Promise that will resolve if entity was deleted or rejected if error was occurred
      */
     static async delete(id: string): Promise<void> {
-        await usersRepository.delete(id);
-        await TasksService.unassignUser(id);
+        await deleteUser(id);
+        // await TasksService.unassignUser(id);
+        
+        const tasks = await TasksService.getAll();
+        const tasksPromises: Promise<ITask>[] = [];
+        tasks.forEach(task => {
+            if (task.userId === id) {
+                tasksPromises.push(TasksService.update(task.id, { ...task, userId: null }));
+            }
+        });
+        await Promise.all(tasksPromises);
     }
 };
