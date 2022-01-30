@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
+import bcryptjs from 'bcryptjs';
 import { ITask } from '../tasks/task.interfaces';
 import { IUser, IUserRepository, IUserResponse } from './user.interfaces';
 
@@ -14,7 +15,7 @@ export class User implements IUser {
   @Column('varchar', { length: 255, default: 'user' })
   login: string;
 
-  @Column('varchar', { length: 255, default: 'P@55w0rd', select: false })
+  @Column('varchar', { length: 255, default: 'P@55w0rd' })
   password: string;
 
   // @Column('simple-array', { default: null, nullable: true, select: false })
@@ -32,7 +33,7 @@ export class User implements IUser {
     this.id = uuidv4();
     this.name = name;
     this.login = login;
-    this.password = password;
+    this.password = bcryptjs.hashSync(password);
     this.tasks = tasks;
   }
 
@@ -43,8 +44,8 @@ export class User implements IUser {
    * @returns User entity object without changes
    */
   static toResponse(user: IUser): IUserResponse {
-    const { id, name, login, tasks } = user;
-    return { id, name, login, tasks };
+    const { id, name, login } = user;
+    return { id, name, login };
   }
 
   /**
@@ -54,7 +55,7 @@ export class User implements IUser {
    * @returns User entity object without id field
    */
   static toRepository(user: IUser): IUserRepository {
-    const { name, login, password, tasks } = user;
-    return { name, login, password, tasks };
+    const { name, login, password } = user;
+    return { name, login, password };
   }
 }

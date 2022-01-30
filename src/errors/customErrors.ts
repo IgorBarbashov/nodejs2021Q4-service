@@ -37,3 +37,31 @@ export class EntityExistsError extends CustomError {
         this.message = message;
     };
 }
+
+export class ForbiddenError extends CustomError {
+    message: string;
+
+    /**
+     * Initialize ForbiddenError entity
+     * 
+     * @param message - Error message
+     */
+    constructor(message: string) {
+        super();
+        this.message = message;
+    };
+}
+
+export class UnauthorizedError extends CustomError {
+    message: string;
+
+    /**
+     * Initialize UnauthorizedError entity
+     * 
+     * @param message - Error message
+     */
+    constructor(message: string) {
+        super();
+        this.message = message;
+    };
+}

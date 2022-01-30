@@ -1,7 +1,8 @@
 export const REPOSITORY_ERROR_MESSAGES = {
     USERS: {
         NOT_FOUND: 'User not found, id: ',
-        EXISTS: 'User already exists, id: '
+        EXISTS: 'User already exists, id: ',
+        NOT_FOUND_BY_LOGIN: 'User not found, login: ',
     },
     COLUMNS: {
         NOT_FOUND: 'Column not found, id: ',
@@ -14,6 +15,15 @@ export const REPOSITORY_ERROR_MESSAGES = {
     TASKS: {
         NOT_FOUND: 'Task not found, id: ',
         EXISTS: 'Task already exists, id: '
+    },
+    LOGIN: {
+        PASSWORD_INVALID: 'Invalid password'
+    },
+    AUTH: {
+        UNAUTHORIZED: 'Unauthorized',
+        INVALID_HEADER: 'Invalid authorization header',
+        INVALID_SCHEME: 'Invalid authorization scheme',
+        INVALID_TOKEN: 'Invalid token'
     }
 };
 
@@ -41,3 +51,6 @@ export const LOGGING_LEVELS = {
         debug: 'red'
     }
 };
+
+export const DEFAULT_USER_LOGIN = 'admin';
+export const DEFAULT_USER_PASSWORD = 'admin';

@@ -12,7 +12,6 @@ export interface IUserRepository {
   name: string;
   login: string;
   password: string;
-  tasks?: ITask[] | null;
 }
 
 export interface IUserResponse {

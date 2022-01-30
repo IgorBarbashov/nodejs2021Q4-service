@@ -76,3 +76,15 @@ export const deleteUser = async (key: string): Promise<void> => {
     throw new EntityNotFoundError(`${REPOSITORY_ERROR_MESSAGES.USERS.NOT_FOUND}${key}`);
   }
 };
+
+/**
+ * Read from DB User entity with requested login
+ * 
+ * @param login - Login of requested User entity
+ * @returns Promise that will resolve with requested User entity or undefined if entity wasn't found
+ */
+export const getUserByLogin = async (login: string): Promise<IUser | undefined> => {
+  const userRepository = getRepository(User);
+  const user = await userRepository.findOne({ where: { login } });
+  return user;
+};

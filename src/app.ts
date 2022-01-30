@@ -2,6 +2,7 @@ import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import { logger } from './logger';
 import { customErrorHandler } from './errors/customErrorHandler';
+import { auth } from './auth';
 import { router } from './resources';
 
 /**
@@ -23,6 +24,11 @@ app.use(logger);
  * Register standard Repository layer errors handler (entity not found, entity already exists e.t.c.)
  */
 app.use(customErrorHandler);
+
+/**
+ * Register authentication middleware
+ */
+ app.use(auth);
 
 /**
  * Register router middleware

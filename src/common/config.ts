@@ -12,5 +12,6 @@ export const {
   POSTGRES_PORT,
   POSTGRES_DB,
   POSTGRES_USER,
-  POSTGRES_PASSWORD
+  POSTGRES_PASSWORD,
+  JWT_SECRET_KEY = ''
 } = process.env;

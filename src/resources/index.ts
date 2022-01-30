@@ -4,6 +4,7 @@ import { docRouter } from './doc/doc.router';
 import { usersRouter } from './users/user.router';
 import { boardsRouter } from './boards/board.router';
 import { tasksRouter } from './tasks/task.router';
+import { loginRouter } from './login/login.router';
 
 /**
  * Utility function to combine all routers
@@ -13,5 +14,6 @@ export const router = combineRouters(
   docRouter,
   usersRouter,
   boardsRouter,
-  tasksRouter
+  tasksRouter,
+  loginRouter
 );
