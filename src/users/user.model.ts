@@ -15,8 +15,4 @@ export class User extends Model<User, IUser> {
 
     @Column({type: DataType.STRING, allowNull: false})
     password: string;
-
-    // TODO
-    // @Column({allowNull: true})
-    // tasks?: ITask[] | null;
 }

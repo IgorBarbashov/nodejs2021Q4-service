@@ -5,6 +5,8 @@ import { User } from "./users/user.model";
 import { UsersModule } from './users/user.module';
 import { Task } from "./tasks/task.model";
 import { TasksModule } from './tasks/task.module';
+import { Board } from "./boards/board.model";
+import { BoardsModule } from './boards/board.module';
 
 @Module({
     controllers: [],
@@ -20,11 +22,12 @@ import { TasksModule } from './tasks/task.module';
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            models: [User, Task],
+            models: [User, Task, Board],
             autoLoadModels: true
         }),
         UsersModule,
-        TasksModule
+        TasksModule,
+        BoardsModule
     ]
 })
 export class AppModule {}
