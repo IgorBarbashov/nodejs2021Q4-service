@@ -37,4 +37,9 @@ export class TasksService {
     async deleteByBoardId(id: string) {
         return await this.taskRepository.destroy({ where: { boardId: id } });
     }
+
+    async unAssignUser(id: string) {
+        return await this.taskRepository.update({ userId: null }, { where: { userId: id } });
+
+    }
 }

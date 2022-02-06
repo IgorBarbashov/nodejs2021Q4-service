@@ -2,11 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.model';
+import { TasksService } from '../tasks/task.service';
 
 @Injectable()
 export class UsersService {
 
-    constructor(@InjectModel(User) private userRepository: typeof User) {}
+    constructor(
+        @InjectModel(User) private userRepository: typeof User,
+        private taskService: TasksService
+    ) {}
 
     async getAllUsers() {
         const users = await this.userRepository.findAll();
@@ -31,6 +35,7 @@ export class UsersService {
     }
 
     async deleteUser(id: string) {
+        this.taskService.unAssignUser(id);
         return await this.userRepository.destroy({ where: { id } });
     }
 }
