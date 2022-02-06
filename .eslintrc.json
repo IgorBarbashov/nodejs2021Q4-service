@@ -52,6 +52,10 @@
       "tryExtensions": [".js", ".ts", ".json", ".node"]
     }],
     "max-classes-per-file": "off",
-    "no-return-await": "off"
+    "no-return-await": "off",
+    "no-useless-constructor": "off",
+    "no-unused-vars": "off",
+    "no-empty-function": "off",
+    "no-use-before-define": "off"
   }
 }
