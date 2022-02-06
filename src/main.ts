@@ -1,7 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from './app.module';
-
-const { PORT } = process.env;
+import { PORT } from './common/config';
 
 async function start() {
     const app = await NestFactory.create(AppModule);

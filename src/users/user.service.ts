@@ -38,4 +38,8 @@ export class UsersService {
         await this.taskService.unAssignUser(id);
         return await this.userRepository.destroy({ where: { id } });
     }
+
+    async getFullDataByLogin(login: string) {
+        return await this.userRepository.findOne({ where: { login } });
+    }
 }

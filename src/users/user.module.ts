@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from "@nestjs/sequelize";
 import { UsersController } from './user.controller';
+import { TasksModule } from '../tasks/task.module';
 import { UsersService } from './user.service';
 import { User } from "./user.model";
 import { Task } from '../tasks/task.model';

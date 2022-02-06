@@ -7,6 +7,11 @@ import { Task } from "./tasks/task.model";
 import { TasksModule } from './tasks/task.module';
 import { Board } from "./boards/board.model";
 import { BoardsModule } from './boards/board.module';
+import { LoginModule } from './login/login.module';
+import {
+    POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER,
+    POSTGRES_PASSWORD, POSTGRES_DB
+} from './common/config';
 
 @Module({
     controllers: [],
@@ -17,16 +22,17 @@ import { BoardsModule } from './boards/board.module';
          }),
         SequelizeModule.forRoot({
             dialect: 'postgres',
-            host: process.env.POSTGRES_HOST,
-            port: Number(process.env.POSTGRES_PORT),
-            username: process.env.POSTGRES_USER,
-            password: process.env.POSTGRES_PASSWORD,
-            database: process.env.POSTGRES_DB,
+            host: POSTGRES_HOST,
+            port: Number(POSTGRES_PORT),
+            username: POSTGRES_USER,
+            password: POSTGRES_PASSWORD,
+            database: POSTGRES_DB,
             models: [User, Task, Board],
             autoLoadModels: true
         }),
-        UsersModule,
         TasksModule,
+        LoginModule,
+        UsersModule,
         BoardsModule
     ]
 })
