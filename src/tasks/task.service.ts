@@ -10,24 +10,24 @@ export class TasksService {
 
     async getAllTasks() {
         const tasks = await this.taskRepository.findAll();
-        return tasks;
+        return tasks.map(Task.toResponse);
     }
 
     async getById(id: string) {
         const task = await this.taskRepository.findByPk(id);
-        return task;
+        return task ? Task.toResponse(task) : task;
     }
 
-    async createTask(dto: ITask) {
-        const taskRepo = Task.toRepository(dto);
+    async createTask(boardId: string, dto: ITask) {
+        const taskRepo = Task.toRepository({ ...dto, boardId });
         const task = await this.taskRepository.create(taskRepo);
-        return task;
+        return Task.toResponse(task);
     }
 
-    async updateTask(id: string, dto: ITask) {
-        const taskRepo = Task.toRepository(dto);
+    async updateTask(boardId: string, id: string, dto: ITask) {
+        const taskRepo = Task.toRepository({ ...dto, boardId });
         const task = await this.taskRepository.update({ ...taskRepo }, { where: { id }, returning: true });
-        return task;
+        return Task.toResponse(task[1][0]);
     }
     
     async deleteTask(id: string) {
@@ -35,11 +35,10 @@ export class TasksService {
     }
 
     async deleteByBoardId(id: string) {
-        return await this.taskRepository.destroy({ where: { boardId: id } });
+        await this.taskRepository.destroy({ where: { boardId: id } });
     }
 
     async unAssignUser(id: string) {
-        return await this.taskRepository.update({ userId: null }, { where: { userId: id } });
-
+        await this.taskRepository.update({ userId: null }, { where: { userId: id } });
     }
 }

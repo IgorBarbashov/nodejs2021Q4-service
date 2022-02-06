@@ -1,4 +1,4 @@
-import { Body, Param, Controller, Get, Post, Put, Delete } from '@nestjs/common';
+import { Body, Param, Controller, Get, Post, Put, Delete, NotFoundException } from '@nestjs/common';
 import { BoardsService } from './board.service';
 import { IBoard } from './board.interfaces';
 
@@ -14,7 +14,12 @@ export class BoardsController {
 
     @Get(':id')
     async getById(@Param('id') id: string) {
-        return await this.boardService.getById(id);
+        const board = await this.boardService.getById(id);
+        if (board === null) {
+            throw new NotFoundException(`Board not found, id ${id}`);
+        } else {
+            return board;
+        }
     }
 
     @Post()
@@ -29,6 +34,12 @@ export class BoardsController {
     
     @Delete(':id')
     async delete(@Param('id') id: string) {
-        return await this.boardService.deleteBoard(id);
+        const deletedCount = await this.boardService.deleteBoard(id);
+
+        if (deletedCount === 0) {
+            throw new NotFoundException(`Board not found, id ${id}`);
+        } else {
+            return deletedCount;
+        }
     };
 }

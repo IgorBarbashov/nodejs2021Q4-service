@@ -1,4 +1,4 @@
-import { Body, Param, Controller, Get, Post, Delete, Put } from '@nestjs/common';
+import { Body, Param, Controller, Get, Post, Delete, Put, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './user.service';
 
@@ -14,7 +14,12 @@ export class UsersController {
 
     @Get(':id')
     async getById(@Param('id') id: string) {
-        return await this.userService.getById(id);
+        const user = await this.userService.getById(id);
+        if (user === null) {
+            throw new NotFoundException(`User not found, id ${id}`);
+        } else {
+            return user;
+        }
     }
 
     @Post()
@@ -29,6 +34,12 @@ export class UsersController {
     
     @Delete(':id')
     async delete(@Param('id') id: string) {
-        return await this.userService.deleteUser(id);
+        const deletedCount = await await this.userService.deleteUser(id);
+
+        if (deletedCount === 0) {
+            throw new NotFoundException(`User not found, id ${id}`);
+        } else {
+            return deletedCount;
+        }
     };
 }

@@ -1,34 +1,48 @@
-import { Body, Param, Controller, Get, Post, Put, Delete } from '@nestjs/common';
+import { Body, Param, Controller, Get, Post, Put, Delete, NotFoundException } from '@nestjs/common';
 import { TasksService } from './task.service';
 import { ITask } from './task.interfaces';
 
-@Controller('boards/:boardId/tasks')
+@Controller('')
 export class TasksController {
 
     constructor(private taskService: TasksService) {};
 
-    @Get()
+    @Get('boards/:boardId/tasks')
     async getAll() {
         return await this.taskService.getAllTasks();
     }
 
-    @Get(':id')
+    @Get('boards/:boardId/tasks/:id')
     async getById(@Param('id') id: string) {
-        return await this.taskService.getById(id);
+        const task = await this.taskService.getById(id);
+        if (task === null) {
+            throw new NotFoundException(`Task not found, id ${id}`);
+        } else {
+            return task;
+        }
     }
 
-    @Post()
-    async create(@Body() taskDto: ITask) {
-        return await this.taskService.createTask(taskDto);
+    @Post('boards/:boardId/tasks')
+    async create(@Param('boardId') boardId: string, @Body() taskDto: ITask) {
+        return await this.taskService.createTask(boardId, taskDto);
     };
 
-    @Put(':id')
-    async update(@Param('id') id: string, @Body() taskDto: ITask) {
-        return await this.taskService.updateTask(id, taskDto);
+    @Put('boards/:boardId/tasks/:id')
+    async update(
+        @Param('boardId') boardId: string,
+        @Param('id') id: string,
+        @Body() taskDto: ITask
+    ) {
+        return await this.taskService.updateTask(boardId, id, taskDto);
     };
     
-    @Delete(':id')
+    @Delete('boards/:boardId/tasks/:id')
     async delete(@Param('id') id: string) {
-        return await this.taskService.deleteTask(id);
+        const deletedCount = await this.taskService.deleteTask(id);
+        if (deletedCount === 0) {
+            throw new NotFoundException(`Task not found, id ${id}`);
+        } else {
+            return deletedCount;
+        }
     };
 }

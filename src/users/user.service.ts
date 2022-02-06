@@ -19,7 +19,7 @@ export class UsersService {
 
     async getById(id: string) {
         const user = await this.userRepository.findByPk(id);
-        return User.toResponse(user);
+        return user ? User.toResponse(user) : user;
     }
 
     async createUser(dto: CreateUserDto) {
@@ -35,7 +35,7 @@ export class UsersService {
     }
 
     async deleteUser(id: string) {
-        this.taskService.unAssignUser(id);
+        await this.taskService.unAssignUser(id);
         return await this.userRepository.destroy({ where: { id } });
     }
 }

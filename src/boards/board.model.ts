@@ -13,6 +13,11 @@ export class Board extends Model<Board, IBoard> {
     @Column({type: DataType.ARRAY(DataType.JSON), unique: false, allowNull: true})
     columns: Record<string, unknown>;
 
+    static toResponse(board: IBoard): IBoard {
+        const { id, title, columns } = board;
+        return { id, title, columns };
+    }
+
     static toRepository(board: IBoard): IBoardToRepository {
         const { title, columns } = board;
         return { title, columns };

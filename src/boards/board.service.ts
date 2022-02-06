@@ -14,24 +14,24 @@ export class BoardsService {
 
     async getAllBoards() {
         const boards = await this.boardRepository.findAll();
-        return boards;
+        return boards.map(Board.toResponse);
     }
 
     async getById(id: string) {
         const board = await this.boardRepository.findByPk(id);
-        return board;
+        return board ? Board.toResponse(board) : board;
     }
 
     async createBoard(dto: IBoard) {
         const boardRepo = Board.toRepository(dto);
         const board = await this.boardRepository.create(boardRepo);
-        return board;
+        return Board.toResponse(board);
     }
 
     async updateBoard(id: string, dto: IBoard) {
         const boardRepo = Board.toRepository(dto);
         const board = await this.boardRepository.update({ ...boardRepo }, { where: { id }, returning: true });
-        return board;
+        return Board.toResponse(board[1][0]);
     }
     
     async deleteBoard(id: string) {

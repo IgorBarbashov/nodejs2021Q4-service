@@ -25,6 +25,11 @@ export class Task extends Model<Task, ITask> {
     @Column({type: DataType.UUID, unique: false, allowNull: true})
     columnId: string | null;
 
+    static toResponse(task: ITask): ITask {
+        const { id, title, order, description, userId, boardId, columnId } = task;
+        return { id, title, order, description, userId, boardId, columnId };
+    }
+
     static toRepository(board: ITask): ITaskRepository {
         const { title, order, description, userId, boardId, columnId } = board;
         return { title, order, description, userId, boardId, columnId };
