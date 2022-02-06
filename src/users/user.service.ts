@@ -22,4 +22,8 @@ export class UsersService {
         const user = await this.userRepository.create(dto);
         return user;
     }
+
+    async deleteUser(id: string) {
+        return await this.userRepository.destroy({ where: { id } });
+    }
 }
