@@ -1,5 +1,5 @@
 import { Model, DataType, Table, Column } from "sequelize-typescript";
-import { ITask } from './task.interfaces';
+import { ITask, ITaskRepository } from './task.interfaces';
 
 @Table({tableName: 'tasks'})
 export class Task extends Model<Task, ITask> {
@@ -24,4 +24,9 @@ export class Task extends Model<Task, ITask> {
 
     @Column({type: DataType.UUID, unique: false, allowNull: true})
     columnId: string | null;
+
+    static toRepository(board: ITask): ITaskRepository {
+        const { title, order, description, userId, boardId, columnId } = board;
+        return { title, order, description, userId, boardId, columnId };
+    }
 }
