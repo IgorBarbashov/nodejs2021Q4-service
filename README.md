@@ -27,8 +27,10 @@ Technical task
   1. Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/)
   2. Clone this repository
   3. Switch to **task_10_nestjs** branch
-  4. Command string for start REST service in Docker: `docker-compose up`
-  5. Command string for tests (start app in docker image first): `docker container exec docker-basics-app npm run test:auth`
+  4. Command string for start PostgreSQL DB in Docker: `docker-compose up`
+  5. Run `npm i` to install dependencies
+  6. Run `npm run start:dev` to start REST-service app
+  5. Command string for tests (start app in docker image first): `npm run test:auth`
 - Application starts on port 4000 by default
 - After starting the app you can open in your browser OpenAPI documentation by typing `http://localhost:4000/doc/`
 
@@ -109,7 +111,6 @@ To define max logging level set variable `LOGGING_LEVEL` in the `.env` file.
 - Docker
 - Jest 27.3.1
 - Supertest 6.1.6
-- Winston 3.3.3 - logging library
 - ESLint 8.3.0
 - TSDoc 0.0.4
 - Npm 8.1.0
