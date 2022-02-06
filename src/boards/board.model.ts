@@ -1,5 +1,5 @@
 import { Model, DataType, Table, Column } from "sequelize-typescript";
-import { IBoard } from './board.interfaces';
+import { IBoard, IBoardToRepository } from './board.interfaces';
 
 @Table({tableName: 'boards'})
 export class Board extends Model<Board, IBoard> {
@@ -12,4 +12,9 @@ export class Board extends Model<Board, IBoard> {
 
     @Column({type: DataType.ARRAY(DataType.JSON), unique: false, allowNull: true})
     columns: Record<string, unknown>;
+
+    static toRepository(board: IBoard): IBoardToRepository {
+        const { title, columns } = board;
+        return { title, columns };
+    }
 }
