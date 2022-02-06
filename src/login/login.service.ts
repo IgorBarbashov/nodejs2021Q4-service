@@ -1,8 +1,11 @@
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import { Injectable, ForbiddenException, UnauthorizedException } from '@nestjs/common';
 import bcryptjs from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/user.service';
 import { ILogin } from './login.interfaces';
+import { JWT_SECRET_KEY } from '../common/config';
+
+export const authMethod = 'Bearer';
 
 @Injectable()
 export class LoginService {
@@ -28,4 +31,18 @@ export class LoginService {
             throw new ForbiddenException();
         }
     }
+
+    auth (header = ''): boolean {
+        const [method = '', token = ''] = header.split(' ');
+
+        if (method !== authMethod) {
+          throw new UnauthorizedException();
+        }
+        
+        try {
+            return !!this.jwtService.verify(token, { secret: JWT_SECRET_KEY });
+        } catch(err) {
+          throw new UnauthorizedException();
+        }
+    };
 }

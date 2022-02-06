@@ -1,8 +1,10 @@
-import { Body, Param, Controller, Get, Post, Put, Delete, NotFoundException } from '@nestjs/common';
+import { Body, Param, Controller, Get, Post, Put, Delete, NotFoundException, UseGuards } from '@nestjs/common';
 import { BoardsService } from './board.service';
 import { IBoard } from './board.interfaces';
+import { LoginGuard } from '../login/login.guard';
 
 @Controller('boards')
+@UseGuards(LoginGuard)
 export class BoardsController {
 
     constructor(private boardService: BoardsService) {};

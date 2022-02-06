@@ -1,8 +1,10 @@
-import { Body, Param, Controller, Get, Post, Delete, Put, NotFoundException } from '@nestjs/common';
+import { Body, Param, Controller, Get, Post, Delete, Put, NotFoundException, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './user.service';
+import { LoginGuard } from '../login/login.guard';
 
 @Controller('users')
+@UseGuards(LoginGuard)
 export class UsersController {
 
     constructor(private userService: UsersService) {};
