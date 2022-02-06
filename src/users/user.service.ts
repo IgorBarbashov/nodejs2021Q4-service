@@ -23,6 +23,11 @@ export class UsersService {
         return user;
     }
 
+    async updateUser(id: string, dto: CreateUserDto) {
+        const user = await this.userRepository.update({ ...dto }, { where: { id }, returning: true });
+        return user;
+    }
+
     async deleteUser(id: string) {
         return await this.userRepository.destroy({ where: { id } });
     }
