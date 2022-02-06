@@ -1,5 +1,5 @@
 import { Model, DataType, Table, Column } from "sequelize-typescript";
-import { IUser } from './user.interfaces';
+import { IUser, IUserResponse } from './user.interfaces';
 
 @Table({tableName: 'users'})
 export class User extends Model<User, IUser> {
@@ -15,4 +15,9 @@ export class User extends Model<User, IUser> {
 
     @Column({type: DataType.STRING, allowNull: false})
     password: string;
+
+    static toResponse(user: IUser): IUserResponse {
+        const { id, name, login } = user;
+        return { id, name, login };
+      }
 }
