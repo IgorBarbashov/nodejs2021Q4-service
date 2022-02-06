@@ -42,4 +42,21 @@ export class UsersService {
     async getFullDataByLogin(login: string) {
         return await this.userRepository.findOne({ where: { login } });
     }
+
+    async onModuleInit(): Promise<void> {
+        try {
+            const isAdminExists = await this.getFullDataByLogin('admin');
+            if (isAdminExists === null) {
+                await this.userRepository.create(
+                    User.toRepository({
+                        id: '',
+                        login: 'admin',
+                        name: 'admin',
+                        password: 'admin'
+                }));
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 }
