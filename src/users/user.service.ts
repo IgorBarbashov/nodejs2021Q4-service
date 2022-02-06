@@ -19,13 +19,15 @@ export class UsersService {
     }
 
     async createUser(dto: CreateUserDto) {
-        const user = await this.userRepository.create(dto);
-        return user;
+        const userRepo = User.toRepository(dto);
+        const user = await this.userRepository.create(userRepo);
+        return User.toResponse(user);
     }
 
     async updateUser(id: string, dto: CreateUserDto) {
-        const user = await this.userRepository.update({ ...dto }, { where: { id }, returning: true });
-        return user;
+        const userRepo = User.toRepository(dto);
+        const user = await this.userRepository.update({ ...userRepo }, { where: { id }, returning: true });
+        return [user[0], user[1].map(User.toResponse)];
     }
 
     async deleteUser(id: string) {

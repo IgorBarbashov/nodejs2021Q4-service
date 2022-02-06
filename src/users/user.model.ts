@@ -1,5 +1,6 @@
+import bcryptjs from 'bcryptjs';
 import { Model, DataType, Table, Column } from "sequelize-typescript";
-import { IUser, IUserResponse } from './user.interfaces';
+import { IUser, IUserResponse, IUserRepository } from './user.interfaces';
 
 @Table({tableName: 'users'})
 export class User extends Model<User, IUser> {
@@ -17,7 +18,13 @@ export class User extends Model<User, IUser> {
     password: string;
 
     static toResponse(user: IUser): IUserResponse {
-        const { id, name, login } = user;
-        return { id, name, login };
-      }
+      const { id, name, login } = user;
+      return { id, name, login };
+    }
+
+    static toRepository(user: IUser): IUserRepository {
+      const { name, login, password } = user;
+      const passwordHash = bcryptjs.hashSync(password);
+      return { name, login, password: passwordHash };
+    }
 }
