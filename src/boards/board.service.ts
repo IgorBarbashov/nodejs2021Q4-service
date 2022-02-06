@@ -9,7 +9,7 @@ export class BoardsService {
     constructor(@InjectModel(Board) private boardRepository: typeof Board) {}
 
     async getAllBoards() {
-        const boards = this.boardRepository.findAll();
+        const boards = await this.boardRepository.findAll();
         return boards;
     }
 

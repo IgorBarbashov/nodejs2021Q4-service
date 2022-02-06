@@ -9,7 +9,7 @@ export class TasksService {
     constructor(@InjectModel(Task) private taskRepository: typeof Task) {}
 
     async getAllTasks() {
-        const tasks = this.taskRepository.findAll();
+        const tasks = await this.taskRepository.findAll();
         return tasks;
     }
 

@@ -8,12 +8,12 @@ export class TasksController {
     constructor(private taskService: TasksService) {};
 
     @Get()
-    getAll() {
-        return this.taskService.getAllTasks();
+    async getAll() {
+        return await this.taskService.getAllTasks();
     }
 
     @Post()
-    create(@Body() taskDto: CreateTaskDto) {
-        return this.taskService.createTask(taskDto);
+    async create(@Body() taskDto: CreateTaskDto) {
+        return await this.taskService.createTask(taskDto);
     };
 }

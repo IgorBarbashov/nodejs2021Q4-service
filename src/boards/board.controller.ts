@@ -8,12 +8,12 @@ export class BoardsController {
     constructor(private boardService: BoardsService) {};
 
     @Get()
-    getAll() {
-        return this.boardService.getAllBoards();
+    async getAll() {
+        return await this.boardService.getAllBoards();
     }
 
     @Post()
-    create(@Body() boardDto: CreateBoardDto) {
-        return this.boardService.createBoard(boardDto);
+    async create(@Body() boardDto: CreateBoardDto) {
+        return await this.boardService.createBoard(boardDto);
     };
 }
