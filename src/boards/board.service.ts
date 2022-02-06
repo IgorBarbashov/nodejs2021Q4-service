@@ -2,11 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Board,  } from './board.model';
 import { IBoard } from './board.interfaces';
+import { TasksService } from '../tasks/task.service';
 
 @Injectable()
 export class BoardsService {
 
-    constructor(@InjectModel(Board) private boardRepository: typeof Board) {}
+    constructor(
+        @InjectModel(Board) private boardRepository: typeof Board,
+        private taskService: TasksService
+    ) {}
 
     async getAllBoards() {
         const boards = await this.boardRepository.findAll();
@@ -31,6 +35,7 @@ export class BoardsService {
     }
     
     async deleteBoard(id: string) {
+        await this.taskService.deleteByBoardId(id);
         return await this.boardRepository.destroy({ where: { id } });
     }
 }
